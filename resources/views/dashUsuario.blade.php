@@ -1,0 +1,48 @@
+@extends('layouts.main_layout')
+
+@section('links')
+    <link rel="stylesheet" href="{{ asset("css/dash-usuario.css") }}">
+@endsection
+
+@section('content')
+
+@foreach ($usuario as $item)
+
+@endforeach
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" role="navigation">
+        <figure  class="navbar-brand">
+            <img class="img-fluid" src="{{ asset('img/logo-w.png') }}" alt="">
+            <h4>Painel Administrativo</h4>
+        </figure>
+
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#mycollapse" aria-controls="mycollapse" aria-expanded="false">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mycollapse">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a href="/dashuser" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Fornecedor</a>
+                </li>
+            </ul>
+        </div>
+        <div class="usuario-info">
+            <div class="usuario-nome">
+                {{ $item->nome }}
+            </div>
+            <figure>
+                <img src="{{ asset('img/user-icon.svg') }}" alt="{{ $item->nome }}">
+            </figure>
+            <a href="/logout" class="nav-link  sair">Sair</a>
+        </div>
+
+    </nav>
+</header>
+
+
+@endsection

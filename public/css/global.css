@@ -1,3 +1,10 @@
+:root{
+    --laranja: #ED2600;
+    --laranja2:#E36600;
+    --fundo: rgb(4, 23, 30);
+    --branco: #fff;
+}
+
 *{
     margin: 0;
     padding: 0;
