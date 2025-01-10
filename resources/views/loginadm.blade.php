@@ -17,32 +17,33 @@
             </div>
             <div id="col2" class="col-md-6">
 
-                <form action="" class="col-md-12">
+                <form action="/login" method="POST" class="col-md-12">
+                    @csrf
                     <h1>Login</h1>
                     <hr>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" class="form-control">
+                            <label for="usuario">Usuário:</label>
+                            <input type="text" name="usuario" class="form-control">
 
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="senha">Senha</label>
-                            <input type="pass" name="senha" class="form-control">
+                            <input type="password" name="senha" class="form-control">
 
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <button class="btn btn-success btn-block">Login</button>
+                        <button type="submit" class="btn btn-success btn-block">Login</button>
                     </div>
 
                 </form>
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="#">Criar uma conta</a>
+                        <a href="/cadastro">Criar uma conta</a>
                     </div>
                 </div>
             </div>

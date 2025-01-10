@@ -2,7 +2,6 @@
     border-radius: 10px;
     box-shadow: 0 0 15px #acacac;
     border: none;
-    padding: 0;
 }
 .card #col1{
     display: flex;
@@ -44,19 +43,17 @@
     margin-top: 30px;
 }
 form{
-    border: rgb(128, 17, 168) 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 15px;
     padding: 0;
 }
 .form-row{
-    border: green 1px solid;
+
     margin: 0;
 }
-
-form .btn{
-    margin-bottom: 30px;
+.row a{
+    padding-bottom: 30px;
+    color: #E36600;
 }
-
-.card a{
-    border: 1px solid red;
-}
-
