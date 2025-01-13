@@ -1,13 +1,15 @@
 @extends('layouts.main_layout')
 
 @section('links')
+    <link rel="stylesheet" href="{{ asset('css/home-style.css') }}">
     <link rel="stylesheet" href="{{ asset("css/dash-usuario.css") }}">
+
 @endsection
 
 @section('content')
 
-@foreach ($usuario as $item)
 
+@foreach ($usuario as $item)
 @endforeach
 
 <header>
@@ -24,10 +26,10 @@
         <div class="collapse navbar-collapse" id="mycollapse">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a href="/dashuser" class="nav-link active">Home</a>
+                    <a href="{{ '/home' }}" target="myframe" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Fornecedor</a>
+                    <a href="{{ '/fornecedor' }}" target="myframe" class="nav-link">Fornecedor</a>
                 </li>
             </ul>
         </div>
@@ -43,6 +45,10 @@
 
     </nav>
 </header>
+
+<iframe id="myFrame" name="myframe" src="/home" frameborder="0"></iframe>
+
+
 
 
 @endsection

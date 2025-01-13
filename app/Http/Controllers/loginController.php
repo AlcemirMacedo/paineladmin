@@ -14,9 +14,10 @@ class loginController extends Controller
     }
 
     public function loginUsuario(Request $request){
+        $senha = $request->senha;
         $user = userModel::where('login', $request->usuario)->first();
 
-        if ($user && Hash::check($request->senha, $user->senha)){
+        if ($user && Hash::check($senha, $user->senha)){
             Session::put('usuarioId', $user->id_usuario);
 
             return redirect('/dashuser');

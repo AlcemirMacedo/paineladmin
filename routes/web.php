@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\dashController;
+use App\Http\Controllers\fornecedorController;
+use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\userController;
@@ -17,3 +19,7 @@ Route::post('/login',[loginController::class, 'loginUsuario']);
 Route::get('/dashuser', [dashController::class, 'viewDash']);
 
 Route::get('/logout', [logoutController::class, 'logoutUser']);
+
+Route::get('/home', [homeController::class, 'viewHome']);
+
+Route::get('/fornecedor', [fornecedorController::class, 'viewFornecedor']);

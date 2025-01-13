@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     @yield('links')
-    <title>Document</title>
+    <title>Infortread - Painel Administrativo</title>
 </head>
 <body>
 
@@ -18,6 +18,7 @@
 
     <script src="{{ asset('js/jquery-3.4.0.min.js') }}"></script>
     <script src="{{ asset('bootstrap-4.1.3-dist/js/bootstrap.min.js') }}"></script>
+
 
 </body>
 </html>
