@@ -27,7 +27,7 @@
                         <td>{{ $item->cidade }}</td>
                         <td>{{ $item->telefone }}</td>
                         <td>{{ $item->email }}</td>
-                        <td><a href="/editar/{{ $item->id_fornecedores }}">Editar</a> | <a href="/editar/{{ $item->id_fornecedores }}">Emitir Recibo</a></td>
+                        <td><a href="/editarfornecedor/{{ $item->id_fornecedores }}">Editar</a> | <a href="/emitirrecibo/{{ $item->id_fornecedores }}">Emitir Recibo</a></td>
                     </tr>
                 @endforeach
 
