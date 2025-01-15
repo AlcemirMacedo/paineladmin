@@ -1,4 +1,3 @@
-
 @extends('layouts.main_layout')
 
 @section('links')
@@ -10,6 +9,8 @@
 
 @section('content')
 <div class="dash-fornecedor">
+
+    
     <form action="/gerarpdf/{{ $item->id_fornecedores }}" method="post">
         @csrf
         <table class="table table-striped">
@@ -29,7 +30,6 @@
                 <th>Telefone:</th>
                 <td>{{ $item->telefone}}</td>
             </tr>
-
             <tr>
                 <th><label for="descricao">Descrição:</label></th>
                 <td><input class="form-control" type="text" name="descricao"></td>
@@ -38,10 +38,9 @@
                 <th><label for="descricao">Valor:</label></th>
                 <td>R$ <input name="descricao" type="text"></td>
             </tr>
-
-
         </table>
-        <button type="submit">Emitir Recibo</button>
+        <button class="btn btn-success btn-lg" type="submit">Emitir Recibo</button>
+        <a href="/fornecedor" class="btn btn-light btn-lg" style="margin-left: 10px">Voltar</a>
     </form>
 
 </div>

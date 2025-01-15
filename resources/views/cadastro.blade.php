@@ -24,5 +24,6 @@
     <hr>
     <a href="/">Voltar</a><br>
 </form>
+<img src="{{ asset('img/assinatura.png') }}" alt="">
 
 @endsection

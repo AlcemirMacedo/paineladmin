@@ -49,3 +49,14 @@ body{
     text-overflow: ellipsis;
 }
 
+.pesq-field{
+    margin-bottom: 20px;
+}
+
+.form-inline{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
