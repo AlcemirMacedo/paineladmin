@@ -12,15 +12,6 @@ class emitirReciboController extends Controller
         return view('emitirrecibo')->with('sql', $sql);
     }
 
-    // public function formatNumber()
-    // {
-    //     $number = '2.545.330,98'; // Número original
-
-    //     // Transformar o número em extenso
-    //     $numberInWords = $this->numberToWords($number);
-
-    // }
-
     private function numberToWords($number)
     {
         // Remover pontos e substituir a vírgula por ponto
@@ -44,8 +35,202 @@ class emitirReciboController extends Controller
         else{
             $centavos = ' e '.$decimalPartInWord.' centavos';
         }
-
         return ucfirst($integerPartInWord).' reais'.$centavos;
+    }
+
+
+    public function baixarPDF(Request $request){
+        $nome = $request->input('nome');
+        $descricao = $request->input('descricao');
+        $valorrecibo = $request->input('valor');
+        $numero = $request->input('numero');
+        $vlrextenso = $request->input(('vlr_extenso'));
+        $html = "
+                <style type='text/css'>
+                    html, body{
+                        height: 297mm;
+                        width: 210mm;
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    }
+
+
+                    .line{
+                        border-bottom: 1px dashed gray;
+                        margin-bottom: 20px;
+                        width: 180mm;
+                    }
+                    .main-body{
+                        display:flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 180mm;
+                        height:280mm;
+                        margin-left:10mm;
+                        margin-top:10mm;
+                    }
+                    .container-pdf{
+                        width: 100%;
+                        height: 120mm;
+                        background-color: #fff;
+                        border: 1px solid rgb(0, 0, 0);
+                        border-radius: 10px;
+                        margin-bottom:5mm;
+                        padding: 5mm;
+                        align-items: center;
+                        background: url('img/watermark.png');
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    .table-rec{
+                        width:100%;
+                    }
+                    .table-rec td{
+                        padding:1.3mm;
+                    }
+                    .table-rec .title-rec{
+                        font-size:30pt;
+                        font-weight: bold;
+                    }
+                    .table-rec .t-style{
+                        border: 1px solid black;
+                        border-radius:2mm;
+                        width:50mm;
+                        padding-left: 2mm;
+                    }
+                    .table-rec .valor span{
+                        font-size:18pt;
+                        font-weight: bold;
+                    }
+                    .table-rec .desc-ref{
+                        border: 1px black solid;
+                        border-radius:10px;
+                        line-height:5mm;
+                        min-height:45mm;
+                        max-height: 45mm;
+                        overflow: hidden;
+                    }
+
+                    table, th, td {
+                        border:1px solid transparent;
+                    }
+
+                    .table-rec  .footer-rec{
+                        border-top: 1px black dashed;
+                        text-align: center;
+                        font-size:9pt;
+                        padding: 2px;
+                        line-height:1mm;
+                    }
+                    .text-assign{
+                        text-align:center;
+                        border-top: 1px solid black;
+                        font-size: 8pt;
+                        position: absolute;
+                        margin-top: -30px;
+                        width:50mm;
+                    }
+                    .desc-text{
+                        text-transform:uppercase;
+                    }
+                </style>
+                <div class='main-body'>
+                    <div class='container-pdf'>
+                        <table class='table-rec' border='0'>
+                            <tr>
+                                <td class='title-rec'>Recibo</td>
+                                <td align='center' class='t-style serie'>Nº $numero</td>
+                                <td></td>
+                                <td align='center' class='t-style valor'>R$ <span> $valorrecibo</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan='4'></td>
+                            </tr>
+                            <tr height='50'>
+                                <td colspan='4'>
+                                    <div class='desc-ref'>
+
+                                        <table style='width:100%; height:45mm'>
+                                            <tr>
+                                                <td>
+                                                    Recebi(emos) de(a): <span>$nome</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    a importância de: <span class='desc-text' style='font-size: 9pt'>$vlrextenso</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    Referente a: <span class='desc-text' style='font-size: 9pt'>$descricao</span>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td align='right'>
+                                                    Manaus, <span class='timedate' style='font-size: 12pt; font-weight:bold;'>___/___/_____. </span><span style='font-size: 9pt'></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan='2'>
+                                        <table align='left'>
+                                            <tr>
+                                                <td>
+                                                    <img src='img/assinatura.png' width='180'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='text-assign'>
+                                                        Júlio Neto<br>
+                                                        Infortread Telecom<br>
+                                                        Gerente Geral
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </td>
+                                <td colspan='2' align='right'>
+                                    <img src='img/carimbo-transp.png' width='180'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan='4' class='footer-rec'>
+                                    <p>Endereço Comercial: RUA DJALMA DUTRA - 44 - NOSSA SENHORA DAS GRACAS | MANAUS-AM - CEP 63.053-400 |</p>
+                                    <p>Contato: (92)9271-7118 | Email: infortread.am@gmail.com | Site: www.infortread.com.br</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class='line'></div>
+
+                </div>
+
+            ";
+
+            return Pdf::loadHTML($html)->setPaper('A4', 'portrait') // Define o tamanho do papel
+                                        ->set_option('isHtml5ParserEnabled', true) // Garante compatibilidade com HTML5
+                                        ->set_option('isRemoteEnabled', true) // Permite imagens externas
+                                        ->set_option('isPhpEnabled', false)
+                                        ->download("Recibo de $nome.pdf");
+
+
     }
 
     public function gerarPdf(Request $request)
@@ -90,12 +275,13 @@ class emitirReciboController extends Controller
                 $numRecibo = 2975;
             }
 
-            DB::insert('insert into tbrecibo values(null, ?,?,?,?,?)', [
+            DB::insert('insert into tbrecibo values(null, ?,?,?,?,?,?)', [
                 $numRecibo.'/'.date('Y'),
                 $cpfcnpj,
                 $descricao,
                 $valorFloat,
-                Date(now())
+                Date(now()),
+                $numberInWords
             ]);
 
 
@@ -133,7 +319,7 @@ class emitirReciboController extends Controller
                     }
                     .container-pdf{
                         width: 100%;
-                        height: 110mm;
+                        height: 120mm;
                         background-color: #fff;
                         border: 1px solid rgb(0, 0, 0);
                         border-radius: 10px;
@@ -169,11 +355,15 @@ class emitirReciboController extends Controller
                         border: 1px black solid;
                         border-radius:10px;
                         line-height:5mm;
-                        min-height:35mm;
-                        max-height: 35mm;
-                        padding:3mm;
+                        min-height:45mm;
+                        max-height: 45mm;
                         overflow: hidden;
                     }
+
+                    table, th, td {
+                        border:1px solid transparent;
+                    }
+
                     .table-rec  .footer-rec{
                         border-top: 1px black dashed;
                         text-align: center;
@@ -208,10 +398,29 @@ class emitirReciboController extends Controller
                             <tr height='50'>
                                 <td colspan='4'>
                                     <div class='desc-ref'>
-                                        Recebi(emos) de(a): <span>$nome</span><br>
-                                        a importância de: <span class='desc-text'>$numberInWords</span><br>
-                                        Referente a: <span class='desc-text' style='font-size: 9pt'>$descricao</span><br>
-                                        Manaus, <span style='font-size: 12pt; font-weight:bold'>$data </span><span style='font-size: 9pt'>| $hora</span>
+
+                                        <table style='width:100%; height:45mm'>
+                                            <tr>
+                                                <td>
+                                                    Recebi(emos) de(a): <span>$nome</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    a importância de: <span class='desc-text' style='font-size: 9pt'>$numberInWords</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    Referente a: <span class='desc-text' style='font-size: 9pt'>$descricao</span>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td align='right'>
+                                                    Manaus, <span class='timedate' style='font-size: 12pt; font-weight:bold;'>___/___/_____. </span><span style='font-size: 9pt'></span>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </td>
                             </tr>

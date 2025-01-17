@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <a href="{{ '/fornecedor' }}" target="myframe" class="nav-link">Fornecedor</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ '/gridrecibo' }}" target="myframe" class="nav-link">Recibos</a>
+                </li>
             </ul>
         </div>
         <div class="usuario-info">
