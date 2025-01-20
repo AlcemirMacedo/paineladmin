@@ -23,6 +23,9 @@ Route::get('/editarfornecedor/{value}', [fornecedorController::class, 'getFornec
 Route::get('emitirrecibo/{value}', [emitirReciboController::class, 'emitirRecibo']);
 Route::post('/gerarpdf', [emitirReciboController::class, 'gerarPdf']);
 Route::get('/gridrecibo', [crudReciboController::class, 'viewGrid']);
-Route::get('/formrecibo', [crudReciboController::class, 'viewFormRecibo']);
+Route::get('/formrecibo/{value}', [crudReciboController::class, 'viewFormRecibo']);
 Route::get('/exluirrecibo/{value}', [crudReciboController::class, 'exluirRecibo']);
 Route::post('/baixarpdf', [emitirReciboController::class, 'baixarPDF']);
+Route::post('/editarrecibo', [crudReciboController::class, 'editarRecibo']);
+Route::post('/editarfornecedor', [crudFornecedorController::class, 'editarFornecedor']);
+Route::get('excluirfornecedor/{value}', [crudFornecedorController::class, 'excluirFornecedor']);

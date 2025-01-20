@@ -12,7 +12,7 @@
                 <button type="submit" class="btn btn-secondary">Pesquisar</button>
                 <div class="form-group col-md-6">
                     <div id="cloader"></div>
-                    <h5 class="text-success text-center" id="txt">Aguarde...</h5>
+                    <h5 class="text-success text-center" id="txt">Gerando Recibo</h5>
                 </div>
             </form>
         </div>
@@ -45,7 +45,7 @@
                             <td>{{ $valorFormatado }}<input type="hidden" placeholder="{{ $valorFormatado }}" value="{{ $valorFormatado }}" name="valor" readonly></td>
                             <td>{{ $item->data_recibo }}<input type="hidden" placeholder="{{ $item->data_recibo }}" value="{{ $item->data_recibo }}" name="data" readonly></td>
                             <input type="hidden" placeholder="{{ $item->vlr_extenso }}" value="{{ $item->vlr_extenso }}" name="vlr_extenso">
-                            <td><button title="Baixar" class="baixar-bot" type="submit" ><i class="bi bi-box-arrow-down"></i></button>| <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" title="Editar"><i class="bi bi-pencil"></i></a> | <a class="excluir-bot" title="Excluir" href="/exluirrecibo/{{ $item->id_recibo }}"><i class="bi bi-trash"></i></a></td>
+                            <td><button title="Baixar" class="baixar-bot" type="submit" style="color: rgb(22, 186, 85)"><i class="bi bi-box-arrow-down"></i></button>| <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar"><i class="bi bi-pencil"></i></a> | <a class="excluir-bot" title="Excluir" href="/exluirrecibo/{{ $item->id_recibo }}"><i class="bi bi-trash"></i></a></td>
                         </tr>
                     </form>
                 @endforeach

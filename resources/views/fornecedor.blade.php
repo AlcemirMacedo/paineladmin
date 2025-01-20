@@ -33,7 +33,11 @@
                         <td>{{ $item->cidade }}</td>
                         <td>{{ $item->telefone }}</td>
                         <td>{{ $item->email }}</td>
-                        <td><a href="/editarfornecedor/{{ $item->id_fornecedores }}">Editar</a> | <a href="/emitirrecibo/{{ $item->id_fornecedores }}">Emitir Recibo</a></td>
+                        <td>
+                            <a title="Editar Fornecedor" href="/editarfornecedor/{{ $item->id_fornecedores }}"><i class="bi bi-pencil"></i></a>
+                             <a title="Emitir Recibo" href="/emitirrecibo/{{ $item->id_fornecedores }}"><i class="bi bi-file-text"></i></a>
+                             <a title="Excluir Recibo" href="#" onclick="confirmarAcao({{ $item->id_fornecedores }})"><i class="bi bi-trash3"></i></a>
+                        </td>
                     </tr>
                 @endforeach
 
@@ -58,4 +62,13 @@
     @endif
 
     </div>
+
+    <script type="text/javascript"> function confirmarAcao(id_fornecedor) {
+            var confirmacao = confirm("Você tem certeza que deseja excluir esse fornecedor com ID "+id_fornecedor+ " ?");
+            if (confirmacao) {
+
+                window.location.href="/excluirfornecedor/"+id_fornecedor;
+            }
+        }
+    </script>
 @endsection

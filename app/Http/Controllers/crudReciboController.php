@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class crudReciboController extends Controller
@@ -25,7 +26,74 @@ class crudReciboController extends Controller
         }
     }
 
-    public function viewFormRecibo(){
-        return view('formRecibo');
+    public function viewFormRecibo($value){
+
+        try {
+            $sql = DB::select('select * from tbrecibo inner join tb_fornecedores on cpfcnpj = cpfcnpj_recibo where id_recibo = ?', [$value]);
+            return view('formRecibo',['sql'=>$sql]);
+        } catch (Exception $ex) {
+            return back()->with('error', 'Não foi possível acessar o recibo');
+        }
+    }
+
+    private function numberToWords($number)
+    {
+        // Remover pontos e substituir a vírgula por ponto
+        $number = str_replace('.', '', $number);
+        $number = str_replace(',', '.', $number);
+
+        // Converter para float
+        $number = floatval($number);
+
+        $integerPart = floor($number);
+        $decimalPart = floor(($number - $integerPart) * 100);
+
+        // Função para converter o número em extenso (exemplo simplificado)
+        $formatter = new \NumberFormatter('pt_BR', \NumberFormatter::SPELLOUT);
+
+        $integerPartInWord = $formatter->format($integerPart);
+        $decimalPartInWord = $formatter->format($decimalPart);
+        if($decimalPartInWord == 'zero'){
+            $centavos = '';
+        }
+        else{
+            $centavos = ' e '.$decimalPartInWord.' centavos';
+        }
+        return ucfirst($integerPartInWord).' reais'.$centavos;
+    }
+
+    public function editarRecibo(Request $request){
+
+        $id = $request->input('id');
+        $numero = $request->input('numero');
+        $nome = $request->input('nome');
+        $cpfcnpj = $request->input('cpfcnpj');
+        $valor = $request->input('valor');
+        $descricao = $request->input('decricao');
+
+        //Remove os pontos
+        $valorrecibosemponto = str_replace('.', '', $valor);
+
+        // Substituir a vírgula por ponto
+        $stringComPonto = str_replace(',', '.', $valorrecibosemponto);
+
+        // Converter a string para float
+        $valorFloat = floatval($stringComPonto);
+
+
+        $numberInWords = $this->numberToWords($valor);
+
+
+        $sql = DB::update('update tbrecibo set desc_recibo = ?, valor_recibo = ?, data_recibo = ?, vlr_extenso = ?  where id_recibo = ?', [
+            $descricao,
+            $valorFloat,
+            Date(now()),
+            $numberInWords,
+            $id
+        ]);
+
+        return redirect('/gridrecibo');
+
+
     }
 }
