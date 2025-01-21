@@ -3,6 +3,7 @@
 @section('links')
     <link rel="stylesheet" href="{{ asset('css/dash-frame.css') }}">
 @endsection
+
 @section('content')
 
 @foreach ($sql as $item)
@@ -53,7 +54,6 @@
             <div class="form-group col-md-4">
                 <label>Cep</label>
                 <input id="cep" class="form-control" type="text" name="cep" value="{{ $item->cep }}">
-                <button id="#btn_search">Pesquisar</button>
             </div>
             <div class="form-group col-md-4">
                 <label>E-mail</label>
@@ -91,28 +91,7 @@
     }
 </script>
 
-{{-- consulta por CEP --}}
-<script type="text/javascript">
-    $('#btn_search').click(function(){
-        $.ajax({
-            url: '/consultarcep.php',
-            type: 'post',
-            dataType: 'json',
-            data: 'cep=' + $('#cep').val(),
-            success: function(data){
-                if(data.sucesso == 1){
-                    // $('#rua').val(data.rua);
-                    // $('#bairro').val(data.bairro);
-                    $('#cidade').val(data.cidade);
-                    $('#uf').val(data.estado);
 
-                    $('#num').focus();
-                }
-            }
-        });
-        return false;
-    });
-</script>
 
 
 @endsection

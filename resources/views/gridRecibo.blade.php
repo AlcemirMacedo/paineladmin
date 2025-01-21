@@ -37,15 +37,25 @@
                             $valorFormatado = number_format($item->valor_recibo, 2, ',', '.');
                         @endphp
                         <tr>
-                            <th scope="row">{{ $item->id_recibo }}<input type="hidden" placeholder="{{ $item->id_recibo }}" nome="id" value="{{ $item->id_recibo }}" readonly></th>
+                            <th scope="row">{{ $item->id_recibo }}<input type="hidden" placeholder="{{ $item->id_recibo }}" name="id" value="{{ $item->id_recibo }}" readonly></th>
                             <td>{{ $item->num_recibo }}<input type="hidden" placeholder="{{ $item->num_recibo }}" value="{{ $item->num_recibo }}" name="numero" readonly></td>
                             <td>{{ $item->cpfcnpj_recibo }}<input type="hidden" placeholder="{{ $item->cpfcnpj_recibo }}"  value="{{ $item->cpfcnpj_recibo }}" name="cpfcnpj" readonly></td>
                             <td class="name_forn">{{ $item->nome }}<input type="hidden" placeholder="{{ $item->nome }}" value="{{ $item->nome }}" name="nome" readonly></td>
-                            <td class="desc_forn">{{ $item->desc_recibo }}<input type="hidden" placeholder="{{ $item->desc_recibo }}" value="{{ $item->desc_recibo }}" name="descricao" readonly></td>
+                            <td class="desc_forn">{{ $item->desc_recibo }}<input title="{{ $item->desc_recibo }}" type="hidden" placeholder="{{ $item->desc_recibo }}" value="{{ $item->desc_recibo }}" name="descricao" readonly></td>
                             <td>{{ $valorFormatado }}<input type="hidden" placeholder="{{ $valorFormatado }}" value="{{ $valorFormatado }}" name="valor" readonly></td>
                             <td>{{ $item->data_recibo }}<input type="hidden" placeholder="{{ $item->data_recibo }}" value="{{ $item->data_recibo }}" name="data" readonly></td>
                             <input type="hidden" placeholder="{{ $item->vlr_extenso }}" value="{{ $item->vlr_extenso }}" name="vlr_extenso">
-                            <td><button title="Baixar" class="baixar-bot" type="submit" style="color: rgb(22, 186, 85)"><i class="bi bi-box-arrow-down"></i></button>| <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar"><i class="bi bi-pencil"></i></a> | <a class="excluir-bot" title="Excluir" href="/exluirrecibo/{{ $item->id_recibo }}"><i class="bi bi-trash"></i></a></td>
+                            <td>
+                                <button title="Baixar" class="baixar-bot" type="submit" style="color: rgb(22, 186, 85)">
+                                    <i class="bi bi-box-arrow-down"></i>
+                                </button>|
+                                <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a> |
+                                <a class="excluir-bot" title="Excluir" href="/exluirrecibo/{{ $item->id_recibo }}">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     </form>
                 @endforeach

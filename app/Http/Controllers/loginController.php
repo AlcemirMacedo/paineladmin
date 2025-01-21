@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\loginRequest;
 use App\Models\userModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class loginController extends Controller
@@ -13,9 +14,12 @@ class loginController extends Controller
         return view('loginadm');
     }
 
-    public function loginUsuario(Request $request){
+    public function loginUsuario(loginRequest $request){
         $senha = $request->senha;
+        $request->validated();
+
         $user = userModel::where('login', $request->usuario)->first();
+
 
         if ($user && Hash::check($senha, $user->senha)){
             Session::put('usuarioId', $user->id_usuario);
@@ -24,7 +28,8 @@ class loginController extends Controller
 
         }
         else{
-            return back()->with('error', 'Não foi possível logar!');
+            Log::error('Houve um erro na tentativa de login');
+            return back()->with('error', 'Login inválido!');
         }
     }
 }

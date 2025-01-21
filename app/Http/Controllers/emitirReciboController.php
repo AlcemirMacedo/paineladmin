@@ -38,7 +38,7 @@ class emitirReciboController extends Controller
         return ucfirst($integerPartInWord).' reais'.$centavos;
     }
 
-
+    //método para emitir um pdf já cadastrado
     public function baixarPDF(Request $request){
         $nome = $request->input('nome');
         $descricao = $request->input('descricao');
@@ -220,6 +220,80 @@ class emitirReciboController extends Controller
 
                     <div class='line'></div>
 
+                    <div class='container-pdf'>
+                        <table class='table-rec' border='0'>
+                            <tr>
+                                <td class='title-rec'>Recibo</td>
+                                <td align='center' class='t-style serie'>Nº $numero</td>
+                                <td></td>
+                                <td align='center' class='t-style valor'>R$ <span> $valorrecibo</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan='4'></td>
+                            </tr>
+                            <tr height='50'>
+                                <td colspan='4'>
+                                    <div class='desc-ref'>
+
+                                        <table style='width:100%; height:45mm'>
+                                            <tr>
+                                                <td>
+                                                    Recebi(emos) de(a): <span>$nome</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    a importância de: <span class='desc-text' style='font-size: 9pt'>$vlrextenso</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    Referente a: <span class='desc-text' style='font-size: 9pt'>$descricao</span>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td align='right'>
+                                                    Manaus, <span class='timedate' style='font-size: 12pt; font-weight:bold;'>___/___/_____. </span><span style='font-size: 9pt'></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan='2'>
+                                        <table align='left'>
+                                            <tr>
+                                                <td>
+                                                    <img src='img/assinatura.png' width='180'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='text-assign'>
+                                                        Júlio Neto<br>
+                                                        Infortread Telecom<br>
+                                                        Gerente Geral
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </td>
+                                <td colspan='2' align='right'>
+                                    <img src='img/carimbo-transp.png' width='180'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan='4' class='footer-rec'>
+                                    <p>Endereço Comercial: RUA DJALMA DUTRA - 44 - NOSSA SENHORA DAS GRACAS | MANAUS-AM - CEP 63.053-400 |</p>
+                                    <p>Contato: (92)9271-7118 | Email: infortread.am@gmail.com | Site: www.infortread.com.br</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
 
             ";
@@ -233,6 +307,9 @@ class emitirReciboController extends Controller
 
     }
 
+
+
+    //método para gerar um PDF para fornecedor
     public function gerarPdf(Request $request)
         {
 
@@ -471,12 +548,33 @@ class emitirReciboController extends Controller
                             <tr>
                                 <td colspan='4'></td>
                             </tr>
-                            <tr>
-                                <td colspan='4' class='desc-ref'>
-                                    Recebi(emos) de(a): <span>$nome</span><br><br>
-                                    a importância de: <span class='desc-text'>$numberInWords</span><br><br>
-                                    Referente a: <span class='desc-text'>$descricao</span><br><br>
-                                    Manaus, <span style='font-size: 12pt; font-weight:bold'>$data </span><span style='font-size: 9pt'>| $hora</span>
+                            <tr height='50'>
+                                <td colspan='4'>
+                                    <div class='desc-ref'>
+
+                                        <table style='width:100%; height:45mm'>
+                                            <tr>
+                                                <td>
+                                                    Recebi(emos) de(a): <span>$nome</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    a importância de: <span class='desc-text' style='font-size: 9pt'>$numberInWords</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    Referente a: <span class='desc-text' style='font-size: 9pt'>$descricao</span>
+                                                </td>
+                                            </tr>
+                                            <tr >
+                                                <td align='right'>
+                                                    Manaus, <span class='timedate' style='font-size: 12pt; font-weight:bold;'>___/___/_____. </span><span style='font-size: 9pt'></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </td>
                             </tr>
 
@@ -514,9 +612,6 @@ class emitirReciboController extends Controller
                     </div>
 
 
-
-
-
                 </div>
 
             ";
@@ -526,6 +621,9 @@ class emitirReciboController extends Controller
                                         ->set_option('isRemoteEnabled', true) // Permite imagens externas
                                         ->set_option('isPhpEnabled', false)
                                         ->download("Recibo de $nome.pdf");
+
+
+
         }
     }
 

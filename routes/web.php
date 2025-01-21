@@ -20,7 +20,7 @@ Route::get('/logout', [logoutController::class, 'logoutUser']);
 Route::get('/home', [homeController::class, 'viewHome']);
 Route::get('/fornecedor', [fornecedorController::class, 'viewFornecedor']);
 Route::get('/editarfornecedor/{value}', [fornecedorController::class, 'getFornecedor']);
-Route::get('emitirrecibo/{value}', [emitirReciboController::class, 'emitirRecibo']);
+Route::get('/emitirrecibo/{value}', [emitirReciboController::class, 'emitirRecibo']);
 Route::post('/gerarpdf', [emitirReciboController::class, 'gerarPdf']);
 Route::get('/gridrecibo', [crudReciboController::class, 'viewGrid']);
 Route::get('/formrecibo/{value}', [crudReciboController::class, 'viewFormRecibo']);

@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(171, 171, 171);
+    background-color: rgb(255, 255, 255);
     width: 100%;
     display: flex;
     justify-content: center;
@@ -58,6 +58,7 @@ body{
     max-height: 250px;
     overflow-y: hidden;
     text-overflow: ellipsis;
+    text-transform: uppercase;
 }
 
 .pesq-field{
@@ -72,6 +73,21 @@ body{
 
 input{
     text-transform: uppercase;
+}
+
+input:focus{
+    box-shadow: none;
+}
+
+.form-row .form-group .form-control{
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgb(45, 45, 45);
+    box-shadow: none;
+}
+input readonly{
+    border-bottom: red solid 1px;
 }
 
 /* load */

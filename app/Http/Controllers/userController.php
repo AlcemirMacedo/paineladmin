@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\cadastroRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,11 @@ class userController extends Controller
         return view('cadastro');
     }
 
-    public function addUser(Request $request){
+    public function addUser(cadastroRequest $request){
 
         $senha = Hash::make($request->senha, ['rounds'=>10]);
+
+        $request -> validated();
 
         try {
             $sql = DB::insert('insert into tbuser values(null, ?,?,?,?)', [
