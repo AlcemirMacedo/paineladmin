@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Session;
 class loginController extends Controller
 {
     public function viewLogin(){
+        if(Session::has('usuarioId')){
+            return redirect('/dashuser');
+        }
         return view('loginadm');
     }
 

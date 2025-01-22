@@ -28,10 +28,37 @@ class userController extends Controller
                 $senha,
                 $request->email
             ]);
-            return redirect('/')->with('success', 'Usuário cadastrado com sucesso!');
+            return redirect('/usuarios')->with('success', 'Usuário cadastrado com sucesso!');
         } catch (Exception $e) {
             Log::error("Erro Alcemir". $e->getMessage());
             return back()->with('error', 'Não foi possível cadastrar usuário')->withInput();
         }
     }
+
+    public function mostrarUsuarios(){
+
+        $sql = DB::select('select * from tbuser');
+        $quant = count($sql);
+        return view('mostrarusuarios', ['sql'=>$sql, 'contador'=>$quant]);
+    }
+
+    public function excluirUsuario($value){
+        try {
+            $sql = DB::delete('delete from tbuser where id_usuario = ?', [$value]);
+            return redirect('/usuarios');
+        } catch (Exception $ex) {
+            return back()->with('error', 'Não foi possível excluir este usuário');
+        }
+    }
+
+    public function formUsuario($value){
+        $sql = DB::select('select * from tbuser where id_usuario = ?', [$value]);
+        return view('formusuario', ['sql'=>$sql]);
+    }
+
+    public function editarUsuario(){
+
+    }
+
+
 }

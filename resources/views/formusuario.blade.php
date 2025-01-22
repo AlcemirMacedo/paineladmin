@@ -12,17 +12,21 @@
     </style>
 @endsection
 
+@foreach ($sql as $item)
+
+@endforeach
+
 @section('content')
 
 <div class="container">
-    <h1 class="text-center">Cadastro de Usuário</h1>
+    <h1 class="text-center">Editar Usuário</h1>
     <hr>
     <form id="passwordForm" action="/cadastrar" method="POST" autocomplete="off">
         @csrf
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="fullname">Nome Completo</label>
-                <input class="form-control" type="text" name="fullname" value="{{ old('fullname') }}">
+                <input class="form-control" type="text" name="fullname" value="{{ $item->nome }}">
             </div>
         </div>
         <div class="form-row">

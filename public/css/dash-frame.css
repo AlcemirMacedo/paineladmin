@@ -83,8 +83,12 @@ input:focus{
     border-radius: 0;
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid rgb(45, 45, 45);
+    border-bottom: 1px solid rgb(151, 151, 151);
     box-shadow: none;
+}
+
+.form-row .form-group label{
+    color: rgb(151, 151, 151);
 }
 input readonly{
     border-bottom: red solid 1px;

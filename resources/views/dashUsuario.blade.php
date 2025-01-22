@@ -1,7 +1,6 @@
 @extends('layouts.main_layout')
 
 @section('links')
-    <link rel="stylesheet" href="{{ asset('css/home-style.css') }}">
     <link rel="stylesheet" href="{{ asset("css/dash-usuario.css") }}">
 
 @endsection
@@ -34,6 +33,13 @@
                 <li class="nav-item">
                     <a href="{{ '/gridrecibo' }}" target="myframe" class="nav-link">Recibos</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ '/funcionarios' }}" target="myframe" class="nav-link">Funcionários</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ '/usuarios' }}" target="myframe" class="nav-link">Usuários</a>
+                </li>
+
             </ul>
         </div>
         <div class="usuario-info">
