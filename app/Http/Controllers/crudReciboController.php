@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\reciboModel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -95,5 +96,23 @@ class crudReciboController extends Controller
         return redirect('/gridrecibo');
 
 
+    }
+
+    public function searchRecibo(Request $request){
+
+        $sql = reciboModel::join('tb_fornecedores', 'tb_fornecedores.cpfcnpj', '=', 'tbrecibo.cpfcnpj_recibo')
+        ->where('nome', 'like', '%'.$request->search.'%')
+        ->orWhere('num_recibo', 'like', '%'.$request->search.'%')
+        ->orWhere('cpfcnpj', 'like', '%'.$request->search.'%')->paginate(10);
+
+        // $qnt = count($sql);
+        if(count($sql) > 0){
+            return view('gridrecibo', [
+                'sql' => $sql,
+            ]);
+        }
+        else{
+            return back()->with('attention','Registro não encontrado!');
+        }
     }
 }

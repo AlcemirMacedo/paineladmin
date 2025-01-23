@@ -8,6 +8,28 @@ use Illuminate\Support\Facades\DB;
 
 class crudFornecedorController extends Controller
 {
+
+    public function cadastrarFornecedor(Request $request){
+
+
+
+        DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?)', [
+            $request->nome,
+            $request->razaosocial,
+            $request->cpfcnpj,
+            $request->endereco,
+            $request->bairro,
+            $request->cidade,
+            $request->uf,
+            $request->cep,
+            $request->email,
+            $request->telefone,
+            $request->tipo
+        ]);
+        return redirect('/cadastrofornecedor');
+
+    }
+
     public function editarFornecedor(Request $request){
         $id = $request->input('id');
         $cpfcnpj = $request->input('cpfcnpj');
@@ -22,7 +44,7 @@ class crudFornecedorController extends Controller
         $telefone = $request->input('telefone');
         $tipo_pessoa = $request->input('tipo_pessoa');
 
-        $sql = DB::update('update tb_fornecedores set nome=?, razaosocial=?, cpfcnpj=?, endereco=?, bairro=?, cidade=?, uf=?, cep=?, email=?, telefone=?, tipo_pessoa=? where id_fornecedores = ? ', [
+        DB::update('update tb_fornecedores set nome=?, razaosocial=?, cpfcnpj=?, endereco=?, bairro=?, cidade=?, uf=?, cep=?, email=?, telefone=?, tipo_pessoa=? where id_fornecedores = ? ', [
             $nome,
             $razaosocial,
             $cpfcnpj,
@@ -42,7 +64,7 @@ class crudFornecedorController extends Controller
 
     public function excluirFornecedor($value){
         try {
-            $sql = DB::delete('delete from tb_fornecedores where id_fornecedores = ?', [$value]);
+            DB::delete('delete from tb_fornecedores where id_fornecedores = ?', [$value]);
             return redirect('/fornecedor');
         } catch (Exception $ex) {
             return back()->with('error', 'Não foi possível excluir este recibo');

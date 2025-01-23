@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\fornecedoresModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class fornecedorController extends Controller
 {
 
     public function viewFornecedor(){
-        $sql = DB::table('tb_fornecedores')->paginate(10);
+        $sql = DB::table('tb_fornecedores')
+        ->orderBy('id_fornecedores', 'desc')
+        ->paginate(10);
 
         return view('fornecedor', compact('sql'));
     }
-
 
     public function getFornecedor($value){
 
@@ -23,4 +26,23 @@ class fornecedorController extends Controller
 
     }
 
+    public function searchFornecedor(Request $request){
+
+        $sql = fornecedoresModel::where('nome', 'like', '%'.$request->search.'%')
+        ->orWhere('cpfcnpj', 'like', '%'.$request->search.'%')->paginate(10)->withQueryString();
+
+        // $qnt = count($sql);
+        if(count($sql) > 0){
+            return view('fornecedor', [
+                'sql' => $sql,
+            ]);
+        }
+        else{
+            return back()->with('attention','Registro não encontrado!');
+        }
+
+    }
+    public function formFornecedor(){
+        return view('cadastrofornecedor');
+    }
 }

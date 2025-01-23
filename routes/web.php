@@ -34,4 +34,8 @@ Route::middleware(['session'])->group(function(){
     Route::get('/usuarios', [userController::class, 'mostrarUsuarios']);
     Route::get('/excluirsuario/{value}', [userController::class, 'excluirUsuario']);
     Route::get('/formrusuario/{value}', [userController::class, 'formUsuario']);
+    Route::get('/searchfornecedor', [fornecedorController::class, 'searchFornecedor']);
+    Route::get('/searchrecibo', [crudReciboController::class, 'searchRecibo']);
+    Route::get('/cadastrofornecedor', [fornecedorController::class, 'formFornecedor']);
+    Route::post('/cadastrarfornecedor', [crudFornecedorController::class, 'cadastrarFornecedor']);
 });

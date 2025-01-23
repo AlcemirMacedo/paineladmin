@@ -7,9 +7,8 @@
 @section('content')
 
 <div class="content col-md-12">
-    <h1 class="text-center" style="margin-top: 20px">Usuários</h1>
-    <hr>
-    <a href="/cadastro" class="btn btn-success" style="margin-bottom: 10px">Cadastrar Usuário</a>
+
+    <a href="/cadastro" class="btn btn-success" style="margin-bottom: 10px; margin-top:20px">Cadastrar Usuário</a>
     <table class="table table-striped table-light col-md-12">
         <thead>
             <tr>
@@ -64,6 +63,3 @@
 
 
 @endsection
-
-
-

@@ -15,7 +15,7 @@
 @section('content')
 
 <div class="container">
-    <h1 class="text-center">Cadastro de Usuário</h1>
+    <h1 class="text-center" >Cadastro de Usuário</h1>
     <hr>
     <form id="passwordForm" action="/cadastrar" method="POST" autocomplete="off">
         @csrf

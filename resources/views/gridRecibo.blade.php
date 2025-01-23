@@ -7,13 +7,32 @@
 @section('content')
     <div class="dash-fornecedor">
         <div class="pesq-field">
-            <form action="" class="form-inline">
-                <input type="text" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
-                <button type="submit" class="btn btn-secondary">Pesquisar</button>
+            <form action="/searchrecibo" class="form-inline" method="GET">
+                <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
+                <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
                 <div class="form-group col-md-6">
                     <div id="cloader"></div>
                     <h5 class="text-success text-center" id="txt">Gerando Recibo</h5>
                 </div>
+
+                @if (Session::has('attention'))
+                    <script>
+                        swal({
+                            title: "Erro de Pesquisa",
+                            text: "{{ Session::get('attention') }}",
+                            icon: "warning"
+                        })
+                    </script>
+                @endif
+
+                {{-- <script>
+                    swal({
+                        title: "Painel Administrativo Erro",
+                        text: "{{ implode('\n', $errors->all()) }}",
+                        icon: "error"
+                    })
+                </script> --}}
+
             </form>
         </div>
         <table class="table table-striped table-light">
