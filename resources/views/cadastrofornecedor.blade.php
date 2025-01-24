@@ -72,6 +72,10 @@
                     <option value="cnpj">CNPJ</option>
                 </select>
             </div>
+            <div class="form-group col-md-4">
+                <label>Contato</label>
+                <input class="form-control" type="text" name="telefone" >
+            </div>
         </div>
 
         <div class="form-row">

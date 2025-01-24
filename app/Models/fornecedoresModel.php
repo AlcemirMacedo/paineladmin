@@ -25,6 +25,7 @@ class fornecedoresModel extends Model
         'cep',
         'email',
         'telefone',
-        'tipo_pessoa'
+        'tipo_pessoa',
+        'data_inclusao'
     ];
 }

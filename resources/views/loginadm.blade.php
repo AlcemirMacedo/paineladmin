@@ -2,6 +2,17 @@
 
 @section('links')
     <link rel="stylesheet" href="{{ asset('css/loginadmin.css') }}">
+    <style>
+        html, body{
+            height: 100vh;
+            }
+            body{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+    </style>
 @endsection
 @section('content')
     <section class="card col-md-6">

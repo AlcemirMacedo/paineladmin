@@ -15,8 +15,6 @@
 
     @yield('content')
 
-
-
     <script src="{{ asset('js/jquery-3.4.0.min.js') }}"></script>
     <script src="{{ asset('bootstrap-4.1.3-dist/js/bootstrap.min.js') }}"></script>
 

@@ -4,20 +4,18 @@
     <link rel="stylesheet" href="{{ asset("css/dash-usuario.css") }}">
 
 @endsection
-
 @section('content')
 
-
 @foreach ($usuario as $item)
+
 @endforeach
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" role="navigation">
         <figure  class="navbar-brand">
-            <img class="img-fluid" src="{{ asset('img/logo-w.png') }}" alt="">
+            <a href="/"><img class="img-fluid" src="{{ asset('img/logo-w.png') }}" alt=""></a>
             <h4>Painel Administrativo</h4>
         </figure>
-
 
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#mycollapse" aria-controls="mycollapse" aria-expanded="false">
             <i class="bi bi-list"></i>
@@ -33,13 +31,9 @@
                 <li class="nav-item">
                     <a href="{{ '/gridrecibo' }}" target="myframe" class="nav-link">Recibos</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="{{ '/funcionarios' }}" target="myframe" class="nav-link">Funcionários</a>
-                </li> --}}
                 <li class="nav-item">
                     <a href="{{ '/usuarios' }}" target="myframe" class="nav-link">Usuários</a>
                 </li>
-
             </ul>
         </div>
         <div class="usuario-info">
@@ -56,8 +50,6 @@
 </header>
 
 <iframe id="myFrame" name="myframe" src="/home" frameborder="0"></iframe>
-
-
 
 
 @endsection

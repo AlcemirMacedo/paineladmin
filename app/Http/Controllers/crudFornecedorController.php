@@ -11,9 +11,9 @@ class crudFornecedorController extends Controller
 
     public function cadastrarFornecedor(Request $request){
 
+    // dd($request);
 
-
-        DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?)', [
+        DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?,?)', [
             $request->nome,
             $request->razaosocial,
             $request->cpfcnpj,
@@ -24,7 +24,8 @@ class crudFornecedorController extends Controller
             $request->cep,
             $request->email,
             $request->telefone,
-            $request->tipo
+            $request->tipo,
+            date('Y-m-d H:i:s')
         ]);
         return redirect('/cadastrofornecedor');
 
