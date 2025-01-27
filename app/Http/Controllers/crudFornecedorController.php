@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\cadastrarFornecedor;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,11 +10,12 @@ use Illuminate\Support\Facades\DB;
 class crudFornecedorController extends Controller
 {
 
-    public function cadastrarFornecedor(Request $request){
+    public function cadastrarFornecedor(cadastrarFornecedor $request){
 
     // dd($request);
+        $request->validated();
 
-        DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?,?)', [
+        $fornecedores = DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?,?)', [
             $request->nome,
             $request->razaosocial,
             $request->cpfcnpj,
@@ -27,8 +29,14 @@ class crudFornecedorController extends Controller
             $request->tipo,
             date('Y-m-d H:i:s')
         ]);
-        return redirect('/cadastrofornecedor');
-
+        
+        if($fornecedores){
+            return redirect('/cadastrofornecedor')->with('success', 'Fornecedor cadastrado com Sucesso!');
+        }
+        else
+        {
+            return redirect('/cadastrofornecedor')->with('error', 'Erro ao cadastrar');
+        }
     }
 
     public function editarFornecedor(Request $request){

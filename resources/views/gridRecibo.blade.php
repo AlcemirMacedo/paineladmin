@@ -25,14 +25,6 @@
                     </script>
                 @endif
 
-                {{-- <script>
-                    swal({
-                        title: "Painel Administrativo Erro",
-                        text: "{{ implode('\n', $errors->all()) }}",
-                        icon: "error"
-                    })
-                </script> --}}
-
             </form>
         </div>
         <table class="table table-striped table-light">

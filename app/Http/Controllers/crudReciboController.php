@@ -11,7 +11,6 @@ class crudReciboController extends Controller
     public function viewGrid(){
         $sql = DB::table('tbrecibo')
                 ->join('tb_fornecedores', 'tb_fornecedores.cpfcnpj', '=', 'tbrecibo.cpfcnpj_recibo')
-                ->select('tbrecibo.*', 'tb_fornecedores.nome')
                 ->orderBy('id_recibo', 'desc')
                 ->paginate(9);
         return view('gridrecibo', compact('sql'));

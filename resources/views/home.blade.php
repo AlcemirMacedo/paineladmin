@@ -15,7 +15,7 @@
     }
     .cards-home{
         transition: all 0.3s;
-        cursor:
+
     }
     .cards-home:hover{
         background-color: rgb(240, 240, 240);
@@ -23,9 +23,6 @@
 </style>
 
 @section('content')
-    @foreach ($ultimoRegistro as $ur)
-
-    @endforeach
         <div class="content" style="display:flex; justify-content: center;">
             <div class="row col-md-12" style="margin-top: 20px">
                 <div class=" col-md-4" style="margin-top: 20px;">
@@ -33,7 +30,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Fornecedores</h5>
                             <hr>
-                            <p class="card-text">Último Registro  {{ $ur->data_inclusao }}</p>
+                            <p class="card-text">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
                             <a href="/fornecedor" class="btn btn-primary">Ver todos | <span class="badge badge-light">{{ $count_fornecedores }}</span></a>
                         </div>
                     </div>
@@ -44,8 +41,8 @@
                         <div class="card-body" >
                             <h5 class="card-title">Recibos</h5>
                             <hr>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laboriosam.</p>
-                            <a href="/gridrecibo" class="btn btn-primary">Ver todos | <span class="badge badge-light">4</span></a>
+                            <p class="card-text">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
+                            <a href="/gridrecibo" class="btn btn-primary">Ver todos | <span class="badge badge-light">{{ $count_recibo }}</span></a>
                         </div>
                     </div>
                 </div>
@@ -55,8 +52,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Funcionários</h5>
                             <hr>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laboriosam.</p>
-                            <a href="#" class="btn btn-primary">Ver todos | <span class="badge badge-light"> 4</span></a>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur.</p>
+                            <a href="#" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>
                 </div>
@@ -66,11 +63,12 @@
                         <div class="card-body">
                             <h5 class="card-title">Usuários</h5>
                             <hr>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laboriosam.</p>
-                            <a href="/usuarios" class="btn btn-primary">Ver todos | <span class="badge badge-light"> 4</span></a>
+                            <p class="card-text">Exitem um total de <code>{{ $countusuario }}</code> usuários cadastrados</p>
+                            <a href="/usuarios" class="btn btn-primary">Ver todos | <span class="badge badge-light"> {{ $countusuario }}</span></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 @endsection

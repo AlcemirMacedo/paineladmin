@@ -11,7 +11,7 @@ class cadastrarFornecedor extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,26 @@ class cadastrarFornecedor extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required',
+            'razaosocial' => 'required',
+            'cpfcnpj' => 'required',
+            'cidade' => 'required',
+            'uf' => 'required|max:2',
+            'email' => 'required',
+            'telefone' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.required' => '* Campo Nome obrigatório',
+            'razaosocial.required' => '* Campo Razão Social obrigatório',
+            'cpfcnpj.required' => '* Campo CPF ou CNPJ obrigatório',
+            'cidade.required' => '* Campo Cidade obrigatório',
+            'uf.required' => '* Campo UF obrigatório',
+            'email.required' => '* Campo E-mail obrigatório',
+            'telefone' => '* Campo Telefone obrigatório'
         ];
     }
 }
