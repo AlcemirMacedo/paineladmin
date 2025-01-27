@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [loginController::class, 'viewLogin']);
 Route::post('/login',[loginController::class, 'loginUsuario']);
+Route::get('/cadastro', [userController::class, 'cadastro']);
 
 Route::middleware(['session'])->group(function(){
-    Route::get('/cadastro', [userController::class, 'cadastro']);
+
     Route::post('/cadastrar', [userController::class, 'addUser']);
     Route::get('/dashuser', [dashController::class, 'viewDash']);
     Route::get('/logout', [logoutController::class, 'logoutUser']);
