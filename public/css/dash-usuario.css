@@ -85,6 +85,8 @@ header nav{
 .usuario-info img:hover{
     border: 2px solid var(--laranja);
 }
+
+
 @media (max-width:500px) {
     .navbar-brand h4{
         display: none;

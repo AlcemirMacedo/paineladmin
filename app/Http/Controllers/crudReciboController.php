@@ -13,7 +13,8 @@ class crudReciboController extends Controller
                 ->join('tb_fornecedores', 'tb_fornecedores.cpfcnpj', '=', 'tbrecibo.cpfcnpj_recibo')
                 ->orderBy('id_recibo', 'desc')
                 ->paginate(9);
-        return view('gridrecibo', compact('sql'));
+                $total_recibo = DB::table('tbrecibo')->count();
+        return view('gridrecibo', compact('sql', 'total_recibo'));
     }
 
     public function exluirRecibo($value){

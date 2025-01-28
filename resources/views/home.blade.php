@@ -53,7 +53,7 @@
                             <h5 class="card-title">Funcionários</h5>
                             <hr>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur.</p>
-                            <a href="#" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
+                            <a href="/listarfuncionarios" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>
                 </div>

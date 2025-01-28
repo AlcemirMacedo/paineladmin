@@ -5,6 +5,7 @@ use App\Http\Controllers\crudReciboController;
 use App\Http\Controllers\dashController;
 use App\Http\Controllers\emitirReciboController;
 use App\Http\Controllers\fornecedorController;
+use App\Http\Controllers\funcionariosController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
@@ -38,4 +39,7 @@ Route::middleware(['session'])->group(function(){
     Route::get('/searchrecibo', [crudReciboController::class, 'searchRecibo']);
     Route::get('/cadastrofornecedor', [fornecedorController::class, 'formFornecedor']);
     Route::post('/cadastrarfornecedor', [crudFornecedorController::class, 'cadastrarFornecedor']);
+    Route::get('/listarfuncionarios', [funcionariosController::class, 'listarFuncionarios']);
+    Route::get('/cadastrofuncionario/{value}', [funcionariosController::class, 'formFuncionario']);
+    Route::get('/cadastrofuncionario', [funcionariosController::class, 'salvarFuncionario']);
 });

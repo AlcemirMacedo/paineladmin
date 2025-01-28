@@ -8,12 +8,12 @@
     <div class="dash-fornecedor">
 
         <div class="pesq-field">
-
             <form  action="/searchfornecedor" method="GET" class="form-inline">
                 {{-- @csrf --}}
                 <a href="/cadastrofornecedor" class="btn btn-success" style="margin-right: 10px">Cadastrar Fornecedor</a>
                 <input type="text" class="form-control col-md-4" name="search" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
+                <span style="position: absolute; right:20px">Total de fornecedores: <code>{{ $count_fornecedor }}</code></span>
             </form>
         </div>
         <table class="table table-striped table-dark">

@@ -10,6 +10,7 @@
             <form action="/searchrecibo" class="form-inline" method="GET">
                 <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
+                <span style="position: absolute; right:20px">Total de recibos emitidos: <code>{{ $total_recibo }}</code></span>
                 <div class="form-group col-md-6">
                     <div id="cloader"></div>
                     <h5 class="text-success text-center" id="txt">Gerando Recibo</h5>
@@ -47,6 +48,7 @@
                         @php
                             $valorFormatado = number_format($item->valor_recibo, 2, ',', '.');
                         @endphp
+
                         <tr>
                             <th scope="row">{{ $item->id_recibo }}<input type="hidden" placeholder="{{ $item->id_recibo }}" name="id" value="{{ $item->id_recibo }}" readonly></th>
                             <td>{{ $item->num_recibo }}<input type="hidden" placeholder="{{ $item->num_recibo }}" value="{{ $item->num_recibo }}" name="numero" readonly></td>

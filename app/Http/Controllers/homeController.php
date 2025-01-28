@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class homeController extends Controller
 {
-
     public function viewHome(){
-
-
-
         //Fornecedores
         $ultimo_For = DB::select('select data_inclusao from tb_fornecedores order by id_fornecedores');
         foreach($ultimo_For as $item){
@@ -22,8 +18,6 @@ class homeController extends Controller
 
         $databd = new DateTime($dataFormatada);
         $dataFormatada = $databd->format('d/m/Y H:i:s');
-
-
 
         $fornecedores = DB::select('select id_fornecedores from tb_fornecedores');
         $count_fornecedores = count($fornecedores);

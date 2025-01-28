@@ -121,6 +121,7 @@ input readonly{
     margin-left: auto;
     margin-right: auto;
   }
+
   @keyframes is-rotating {
     to {
       transform: rotate(1turn);
