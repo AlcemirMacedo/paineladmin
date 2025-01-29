@@ -12,7 +12,6 @@ class crudFornecedorController extends Controller
 
     public function cadastrarFornecedor(cadastrarFornecedor $request){
 
-    // dd($request);
         $request->validated();
 
         $fornecedores = DB::insert('insert into tb_fornecedores values (null,?,?,?,?,?,?,?,?,?,?,?,?)', [
@@ -29,7 +28,7 @@ class crudFornecedorController extends Controller
             $request->tipo,
             date('Y-m-d H:i:s')
         ]);
-        
+
         if($fornecedores){
             return redirect('/cadastrofornecedor')->with('success', 'Fornecedor cadastrado com Sucesso!');
         }

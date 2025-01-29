@@ -11,7 +11,7 @@ class funcionarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,29 @@ class funcionarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'matricula' => 'required',
+            'nome' => 'required',
+            'cargo' => 'required',
+            'cpf' => 'required|min:14',
+            'endereco' => 'required',
+            'email' => 'required',
+            'contato' => 'required',
+            'data_nasc' => 'required'
         ];
     }
+
+    public function messages(){
+        return [
+            'matricula.required' => 'Campo Nome obrigatório',
+            'nome.required' => 'Campo Nome obrigatório',
+            'cargo.required' => 'Campo Cargo obrigatório',
+            'cpf.required' => 'Campo CPF ou CNPJ obrigatório',
+            'cpf.min' => 'CPF deve conter 14 caracteres',
+            'endereco.required' => 'Campo Endereço obrigatório',
+            'email.required' => 'Campo E-mail obrigatório',
+            'contato.required' => 'Campo Contato obrigatório',
+            'data_nasc.required' => 'Campo Data de Nascimento obrigatório'
+        ];
+    }
+
 }

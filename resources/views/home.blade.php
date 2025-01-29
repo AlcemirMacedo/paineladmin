@@ -52,7 +52,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Funcionários</h5>
                             <hr>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur.</p>
+                            <p class="card-text">Temos um total de <code>4</code> funcionários registrados</p>
                             <a href="/listarfuncionarios" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>

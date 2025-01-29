@@ -1,8 +1,5 @@
 @extends('layouts.main_layout')
 
-
-{{--  --}}
-
 @section('links')
     <link rel="stylesheet" href="{{ asset('css/dash-frame.css') }}">
     <style>
@@ -17,16 +14,6 @@
 
 @section('content')
 
-@if (Session::has('success'))
-    <script>
-        swal({
-            title: "Tudo certo!",
-            text: "{{ Session::get('success') }}",
-            icon: "success"
-        })
-    </script>
-@endif
-
 @if (Session::has('error'))
     <script>
         swal({
@@ -38,6 +25,7 @@
 @endif
 
 @foreach ($sql as $item)
+
 @endforeach
 
 <div class="container">
@@ -46,36 +34,44 @@
     <form action="/cadastrofuncionario" method="post">
         @csrf
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>Nome</label>
-                <input type="hidden" name="id" value="{{ $item->id_funcionario }}">
-                <input class="form-control" type="text" name="nome" value="{{ $item->nome_funcionario }}">
+            <div class="form-group col-md-3">
+                <label>Matrícula</label>
+                <input type="hidden" name="id" value="{{ @$item->id_funcionario }}">
+                <input class="form-control" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="matricula" value="{{ old('matricula', @$item->matricula_funcionario) }}">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-5">
+                <label>Nome</label>
+                <input class="form-control" type="text" name="nome" value="{{ old('nome', @$item->nome_funcionario) }}">
+            </div>
+            <div class="form-group col-md-4">
                 <label>Cargo</label>
-                <input class="form-control" type="text" name="cargo" value="{{ $item->cargo_funcionario}}">
+                <input class="form-control" type="text" name="cargo" value="{{ old('cargo', @$item->cargo_funcionario)}}">
             </div>
         </div>
 
         <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>CPF ou CNPJ</label>
-                <input class="form-control" maxlength="18" oninput="mascararDocumento(this)" type="text" name="cpfcnpj" value="{{ $item->cpf_funcionario }}" >
+            <div class="form-group col-md-3">
+                <label>CPF</label>
+                <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" value="{{ old('cpf', @$item->cpf_funcionario) }}">
             </div>
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-9">
                 <label>Endereço</label>
-                <input class="form-control" type="text" name="endereco" value="{{ $item->end_funcionario }}" >
+                <input class="form-control" type="text" name="endereco" value="{{ old('endereco', @$item->end_funcionario) }}" >
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Email</label>
-                <input class="form-control" type="email" name="email" value="{{ $item->email_funcionario }}">
+                <input class="form-control" type="email" name="email" value="{{ old('email', @$item->email_funcionario) }}">
             </div>
             <div class="form-group col-md-4">
                 <label>Contato</label>
-                <input class="form-control" type="text" name="telefone" value="{{ $item->contato_funcionario }}" oninput="mascaraTelefone(this)">
+                <input class="form-control" type="text" name="contato" value="{{ old('contato', @$item->contato_funcionario) }}" oninput="mascaraTelefone(this)">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Data de Nascimento</label>
+                <td><input type="date" class="form-control" value="{{ @$item->data_nasc }}" name="data_nasc"></td>
             </div>
         </div>
 
@@ -86,30 +82,33 @@
     </form>
 </div>
 
-    @if ($errors -> any())
-        <script>
-            swal({
-                title: "Mensagem de erro",
-                text: "{{ implode('\n', $errors->all()) }}",
-                icon: "error"
-            })
-        </script>
-    @endif
+@if ($errors -> any())
+    <script>
+        swal({
+            title: "Mensagem de erro",
+            text: "{{ implode('\n', $errors->all()) }}",
+            icon: "error"
+        })
+    </script>
+@endif
 
+{{-- Máscara de CPF --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cpfInput = document.getElementById("cpf");
 
-{{-- Máscara de CPF e CNPJ --}}
-<script> function mascararDocumento(input)
-    {
-        let value = input.value.replace(/\D/g, '');
-        if (value.length <= 11)
-            {
-                input.value = value.replace(/(\d{3})(\d)/, '$1.$2') .replace(/(\d{3})(\d)/, '$1.$2') .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            }
-        else
-            {
-                input.value = value.replace(/^(\d{2})(\d)/, '$1.$2') .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3') .replace(/\.(\d{3})(\d)/, '.$1/$2') .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
-            }
-    }
+        cpfInput.addEventListener("input", function () {
+            let value = cpfInput.value;
+            value = value.replace(/\D/g, ""); // Remove tudo que não for número
+
+            // Aplica a máscara: 000.000.000-00
+            value = value.replace(/^(\d{3})(\d)/, "$1.$2");
+            value = value.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+            value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+
+            cpfInput.value = value;
+        });
+    });
 </script>
 
 {{-- Máscara de CEP --}}

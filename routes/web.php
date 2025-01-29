@@ -41,5 +41,6 @@ Route::middleware(['session'])->group(function(){
     Route::post('/cadastrarfornecedor', [crudFornecedorController::class, 'cadastrarFornecedor']);
     Route::get('/listarfuncionarios', [funcionariosController::class, 'listarFuncionarios']);
     Route::get('/cadastrofuncionario/{value}', [funcionariosController::class, 'formFuncionario']);
-    Route::get('/cadastrofuncionario', [funcionariosController::class, 'salvarFuncionario']);
+    Route::post('/cadastrofuncionario/', [funcionariosController::class, 'salvarFuncionario']);
+    Route::get('/exluirfucionario/{value}', [funcionariosController::class, 'exluirFucionario']);
 });
