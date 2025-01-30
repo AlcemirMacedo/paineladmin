@@ -4,52 +4,40 @@
     <link rel="stylesheet" href="{{ asset('css/dash-frame.css') }}">
 @endsection
 
-@foreach ($sql as $item)
-
-@endforeach
-
 @section('content')
 
-@if (Session::has('error'))
-    <script>
-        swal()
-    </script>
-@endif
-
 <section class="container">
-    <h1 class="text-center" style="margin-top: 20px "><i class="bi bi-pencil"></i> Editar Recibo</h1>
+    <h1 class="text-center" style="margin-top: 20px ">Formulário RDV</h1>
     <hr/>
     <form action="/editarrecibo" method="POST">
         @csrf
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>Número</label>
-                <input name="numero" class="form-control" type="text" placeholder="{{ $item->num_recibo }}" value="{{ $item->num_recibo }}" readonly>
-                <input type="hidden" name="id" value="{{ $item->id_recibo }}">
+                <input name="numero" class="form-control" type="text" >
+
             </div>
             <div class="form-group col-md-9">
                 <label>Nome</label>
-                <input name="nome" class="form-control" type="text" placeholder="{{ $item->nome }}" value="{{ $item->nome }}" readonly>
+                <input name="nome" class="form-control" type="text">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>CPF / CNPJ</label>
-                <input name="cpfcnpj" class="form-control" type="text" placeholder="{{ $item->cpfcnpj }}" value="{{ $item->cpfcnpj }}" readonly>
+                <input name="cpfcnpj" class="form-control" type="text">
             </div>
-            @php
-                $valorFormatado = number_format($item->valor_recibo, 2, ',', '.');
-            @endphp
+
             <div class="form-group col-md-9">
                 <label>Valor R$</label>
-                <input name="valor" class="form-control" id="valor" oninput="formatarMoeda(this)" type="text" value="{{ $valorFormatado }}">
+                <input name="valor" class="form-control" id="valor" oninput="formatarMoeda(this)" type="text">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label>Descrição</label>
-                <input name="decricao" class="form-control" type="text" value="{{ $item->desc_recibo }}">
+                <input name="decricao" class="form-control" type="text" >
             </div>
         </div>
         <button type="submit" class="btn btn-success" style="margin-right:10px">Salvar Alterações</button>

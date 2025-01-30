@@ -40,7 +40,7 @@
                         <td>
                             <a title="Editar Fornecedor" href="/editarfornecedor/{{ $item->id_fornecedores }}"><i class="bi bi-pencil"></i></a>
                              <a title="Emitir Recibo" href="/emitirrecibo/{{ $item->id_fornecedores }}"><i class="bi bi-file-text"></i></a>
-                             <a title="Excluir Recibo" href="#" onclick="confirmarAcao({{ $item->id_fornecedores }})"><i class="bi bi-trash3"></i></a>
+                             <a title="Excluir Fornecedor" href="#" onclick="confirmarAcao({{ $item->id_fornecedores }})"><i class="bi bi-trash3"></i></a>
                         </td>
                     </tr>
                 @endforeach

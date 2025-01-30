@@ -39,8 +39,8 @@ header nav{
 }
 
 .navbar .navbar-nav .nav-item .nav-link{
-    color: var(--laranja2);
-    font-size: 16pt;
+    color: var(--branco);
+    font-size: 13pt;
     font-weight: lighter;
     letter-spacing: 0%;
     margin-right: 30px;
@@ -48,7 +48,7 @@ header nav{
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover{
-    color: var(--branco);
+    color: var(--laranja2);
 }
 
 .navbar .navbar-brand{

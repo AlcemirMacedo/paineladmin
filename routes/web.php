@@ -9,15 +9,16 @@ use App\Http\Controllers\funcionariosController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
+use App\Http\Controllers\rdvController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [loginController::class, 'viewLogin']);
 Route::post('/login',[loginController::class, 'loginUsuario']);
 Route::get('/cadastro', [userController::class, 'cadastro']);
+Route::post('/cadastrar', [userController::class, 'addUser']);
 
 Route::middleware(['session'])->group(function(){
-    Route::post('/cadastrar', [userController::class, 'addUser']);
     Route::get('/dashuser', [dashController::class, 'viewDash']);
     Route::get('/logout', [logoutController::class, 'logoutUser']);
     Route::get('/home', [homeController::class, 'viewHome']);
@@ -27,7 +28,7 @@ Route::middleware(['session'])->group(function(){
     Route::post('/gerarpdf', [emitirReciboController::class, 'gerarPdf']);
     Route::get('/gridrecibo', [crudReciboController::class, 'viewGrid']);
     Route::get('/formrecibo/{value}', [crudReciboController::class, 'viewFormRecibo']);
-    Route::get('/exluirrecibo/{value}', [crudReciboController::class, 'exluirRecibo']);
+    Route::get('/excluirrecibo/{value}', [crudReciboController::class, 'exluirRecibo']);
     Route::post('/baixarpdf', [emitirReciboController::class, 'baixarPDF']);
     Route::post('/editarrecibo', [crudReciboController::class, 'editarRecibo']);
     Route::post('/editarfornecedor', [crudFornecedorController::class, 'editarFornecedor']);
@@ -43,4 +44,6 @@ Route::middleware(['session'])->group(function(){
     Route::get('/cadastrofuncionario/{value}', [funcionariosController::class, 'formFuncionario']);
     Route::post('/cadastrofuncionario/', [funcionariosController::class, 'salvarFuncionario']);
     Route::get('/exluirfucionario/{value}', [funcionariosController::class, 'exluirFucionario']);
+    Route::get('/gridrdv', [rdvController::class, 'listarRdv']);
+    Route::get('/formrdv', [rdvController::class, 'formRdv']);
 });

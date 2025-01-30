@@ -6,16 +6,36 @@
 
 @section('content')
 
+@if (Session::has('success'))
+    <script>
+        swal({
+                title: "Sucesso",
+                text: "{{ Session::get('success') }}",
+                icon: "success"
+            })
+    </script>
+@endif
+
+@if (Session::has('error'))
+    <script>
+        swal({
+                title: "error",
+                text: "{{ Session::get('error') }}",
+                icon: "error"
+            })
+    </script>
+@endif
+
 <div class="content col-md-12">
 
     <a href="/cadastro" class="btn btn-success" style="margin-bottom: 10px; margin-top:20px">Cadastrar Usuário</a>
-    <table class="table table-striped table-light col-md-12">
+    <table class="table table-striped table-dark col-md-12">
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Login</th>
-                <th scope="col">Data</th>
+                <th scope="col">E-mail</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>

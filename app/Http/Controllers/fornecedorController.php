@@ -34,10 +34,13 @@ class fornecedorController extends Controller
         $sql = fornecedoresModel::where('nome', 'like', '%'.$request->search.'%')
         ->orWhere('cpfcnpj', 'like', '%'.$request->search.'%')->paginate(10)->withQueryString();
 
-        // $qnt = count($sql);
+
+
+        $count_fornecedor = count($sql);
         if(count($sql) > 0){
             return view('fornecedor', [
                 'sql' => $sql,
+                'count_fornecedor' => $count_fornecedor
             ]);
         }
         else{

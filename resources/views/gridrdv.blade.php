@@ -8,9 +8,9 @@
     @if(Session::has('success'))
         <script>
             swal({
-            title: "Tudo ceto!",
-            text: "{{ Session::get('success') }}",
-            icon: "success"
+                title: "Tudo ceto!",
+                text: "{{ Session::get('success') }}",
+                icon: "success"
             })
         </script>
     @endif
@@ -18,10 +18,10 @@
     <div class="dash-fornecedor">
         <div class="pesq-field">
             <form action="/searchrecibo" class="form-inline" method="GET">
-                <a href="/cadastrofuncionario/{{ 0 }}" class="btn btn-success" style="margin-right: 10px">Cadastrar Funcionário</a>
+                <a href="/formrdv" class="btn btn-success" style="margin-right: 10px">NOVO RDV</a>
                 <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
-                <span style="position: absolute; right:20px">Total de recibos emitidos: <code>{{ $count_funcionarios }}</code></span>
+                <span style="position: absolute; right:20px">Total: <code>{{ $count }}</code></span>
             </form>
         </div>
         <table class="table table-striped table-dark">

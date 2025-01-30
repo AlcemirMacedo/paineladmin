@@ -28,7 +28,7 @@ class userController extends Controller
                 $senha,
                 $request->email
             ]);
-            return redirect('/usuarios')->with('success', 'Usuário cadastrado com sucesso!');
+            return redirect('/')->with('success', 'Usuário cadastrado com sucesso!');
         } catch (Exception $e) {
             Log::error("Erro Alcemir". $e->getMessage());
             return back()->with('error', 'Não foi possível cadastrar usuário')->withInput();

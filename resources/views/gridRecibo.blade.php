@@ -8,6 +8,7 @@
     <div class="dash-fornecedor">
         <div class="pesq-field">
             <form action="/searchrecibo" class="form-inline" method="GET">
+                <a href="#" class="btn btn-success" style="margin-right: 10px" data-toggle="modal" data-target="#modal-select">Novo Recibo</a>
                 <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
                 <span style="position: absolute; right:20px">Total de recibos emitidos: <code>{{ $total_recibo }}</code></span>
@@ -28,7 +29,7 @@
 
             </form>
         </div>
-        <table class="table table-striped table-light">
+        <table class="table table-striped table-dark">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -65,7 +66,7 @@
                                 <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </a> |
-                                <a class="excluir-bot" title="Excluir" href="/exluirrecibo/{{ $item->id_recibo }}">
+                                <a class="excluir-bot" title="Excluir" href="#" onclick="confirmarAcao({{ $item->id_recibo }})">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
@@ -95,17 +96,37 @@
 
     </div>
 
-    <script type="text/javascript">
-        function showLoader(){
-            document.getElementById('txt').classList.toggle('view');
-            document.getElementById('cloader').classList.toggle('loadActive');
+    {{-- MODAL PARA SELECIONAR O CLIENTE DO RECIBO --}}
+    <div class="modal fade" id="modal-select" tabindex="-1" aria-labelledby="modal-select" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-tittle">Selecione fornecedor</h4>
+                    <button type="button" class="close" data-dismiss="modal"><i class="bi bi-x-circle-fill"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
 
-            setTimeout(() => {
-                document.getElementById('txt').classList.toggle('view');
-                document.getElementById('cloader').classList.toggle('loadActive');
-            }, 5000);
+                    </form>
+                    <table>
+                        <tr>
+                            <td>id</td>
+                            <td>cpf/cnpj</td>
+                            <td>Nome</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript"> function confirmarAcao(id_recibo) {
+        var confirmacao = confirm("Você tem certeza que deseja excluir o recibo com ID "+id_recibo+ " ?");
+        if (confirmacao) {
+
+            window.location.href="/excluirrecibo/"+id_recibo;
         }
-
+    }
     </script>
 @endsection
 

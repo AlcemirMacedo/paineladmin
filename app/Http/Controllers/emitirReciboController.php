@@ -60,8 +60,6 @@ class emitirReciboController extends Controller
                         text-align: center;
                         font-family: Verdana, Geneva, Tahoma, sans-serif;
                     }
-
-
                     .line{
                         border-bottom: 1px dashed gray;
                         margin-bottom: 20px;
@@ -306,8 +304,6 @@ class emitirReciboController extends Controller
 
 
     }
-
-
 
     //método para gerar um PDF para fornecedor
     public function gerarPdf(Request $request)

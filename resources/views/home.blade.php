@@ -13,13 +13,17 @@
         padding: 0;
         box-sizing: border-box;
     }
-    .cards-home{
+    .content .cards-home{
+        color: var(--branco);
         transition: all 0.3s;
-
+        background-color: var(--fundo2);
     }
     .cards-home:hover{
         background-color: rgb(240, 240, 240);
+        color: var(--fundo);
     }
+
+
 </style>
 
 @section('content')
@@ -30,7 +34,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Fornecedores</h5>
                             <hr>
-                            <p class="card-text">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
+                            <p class="card-text" style="font-weight: bold;">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
                             <a href="/fornecedor" class="btn btn-primary">Ver todos | <span class="badge badge-light">{{ $count_fornecedores }}</span></a>
                         </div>
                     </div>
@@ -41,7 +45,7 @@
                         <div class="card-body" >
                             <h5 class="card-title">Recibos</h5>
                             <hr>
-                            <p class="card-text">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
+                            <p class="card-text" style="font-weight: bold;">Último Registro: <code>{{ $ultimoRegistro }}</code>  </p>
                             <a href="/gridrecibo" class="btn btn-primary">Ver todos | <span class="badge badge-light">{{ $count_recibo }}</span></a>
                         </div>
                     </div>
@@ -54,6 +58,17 @@
                             <hr>
                             <p class="card-text">Temos um total de <code>4</code> funcionários registrados</p>
                             <a href="/listarfuncionarios" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="margin-top: 20px">
+                    <div class="cards-home card"  style="border-top:3px solid red ">
+                        <div class="card-body">
+                            <h5 class="card-title">RDV</h5>
+                            <hr>
+                            <p class="card-text">Temos um total de <code>4</code> funcionários registrados</p>
+                            <a href="/gridrdv" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>
                 </div>
