@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .menu-home a{
     text-decoration: none;
     color: white;
@@ -26,4 +25,3 @@
 .menu-home .link_recibo:hover{
     box-shadow: 0 0 10px black;
 }
-

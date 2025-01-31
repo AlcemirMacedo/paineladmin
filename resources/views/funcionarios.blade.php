@@ -16,12 +16,14 @@
     @endif
 
     <div class="dash-fornecedor">
+        <h1>Funcionários</h1>
+        <hr>
         <div class="pesq-field">
             <form action="/searchrecibo" class="form-inline" method="GET">
                 <a href="/cadastrofuncionario/{{ 0 }}" class="btn btn-success" style="margin-right: 10px">Cadastrar Funcionário</a>
                 <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
-                <span style="position: absolute; right:20px">Total de recibos emitidos: <code>{{ $count_funcionarios }}</code></span>
+                <span style="position: absolute; right:20px">Total de <code>{{ $count_funcionarios }}</code> funcionários cadastrados</span>
             </form>
         </div>
         <table class="table table-striped table-dark">

@@ -46,4 +46,6 @@ Route::middleware(['session'])->group(function(){
     Route::get('/exluirfucionario/{value}', [funcionariosController::class, 'exluirFucionario']);
     Route::get('/gridrdv', [rdvController::class, 'listarRdv']);
     Route::get('/formrdv', [rdvController::class, 'formRdv']);
+    Route::get('/formrecibo', [emitirReciboController::class, 'formReciboAvulso']);
+    Route::post('/emitirpdfavulso', [emitirReciboController::class, 'emitirPdfAvulso']);
 });

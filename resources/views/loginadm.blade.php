@@ -48,7 +48,7 @@
                 @endif
                 <form action="/login" method="POST" class="col-md-12">
                     @csrf
-                    <h1>Login</h1>
+                    <h1 class="text-center">Login</h1>
                     <hr>
                     <div class="form-row">
                         <div class="form-group col-md-12">

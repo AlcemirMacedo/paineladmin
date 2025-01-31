@@ -6,9 +6,12 @@
 
 @section('content')
     <div class="dash-fornecedor">
+        <h1>Recibos</h1>
+        <hr>
         <div class="pesq-field">
             <form action="/searchrecibo" class="form-inline" method="GET">
-                <a href="#" class="btn btn-success" style="margin-right: 10px" data-toggle="modal" data-target="#modal-select">Novo Recibo</a>
+                {{-- <a href="/formReciboAvulso" class="btn btn-success" style="margin-right: 10px" data-toggle="modal" data-target="#modal-select">Recibo Avulso</a> --}}
+                <a href="/formrecibo" class="btn btn-success" style="margin-right: 10px">Recibo Avulso</a>
                 <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ">
                 <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button>
                 <span style="position: absolute; right:20px">Total de recibos emitidos: <code>{{ $total_recibo }}</code></span>

@@ -34,9 +34,9 @@
                 <li class="nav-item">
                     <a href="{{ '/listarfuncionarios' }}" target="myframe" class="nav-link">Funcionarios</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ '/gridrdv' }}" target="myframe" class="nav-link">RDV</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="{{ '/usuarios' }}" target="myframe" class="nav-link">Usuários</a>
                 </li>

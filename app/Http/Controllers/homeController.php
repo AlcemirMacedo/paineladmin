@@ -24,8 +24,14 @@ class homeController extends Controller
 
         //Recibos
         $ultimo_recibo = DB::select('select data_recibo from tbrecibo order by id_recibo');
-        foreach($ultimo_recibo as $item){
-            $ultimorecibo = $item->data_recibo;
+        if($ultimo_recibo){
+            foreach($ultimo_recibo as $item){
+
+                $ultimorecibo = $item->data_recibo;
+            }
+
+        }else{
+            $ultimorecibo=0;
         }
 
         $recibos = DB::select('select * from tbrecibo');

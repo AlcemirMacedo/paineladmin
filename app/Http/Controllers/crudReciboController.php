@@ -11,7 +11,7 @@ class crudReciboController extends Controller
 {
     public function viewGrid(){
         $sql = DB::table('tbrecibo')
-                ->join('tb_fornecedores', 'tb_fornecedores.cpfcnpj', '=', 'tbrecibo.cpfcnpj_recibo')
+                ->leftjoin('tb_fornecedores', 'tb_fornecedores.cpfcnpj', '=', 'tbrecibo.cpfcnpj_recibo')
                 ->orderBy('id_recibo', 'desc')
                 ->paginate(9);
                 $total_recibo = DB::table('tbrecibo')->count();
@@ -38,8 +38,7 @@ class crudReciboController extends Controller
         }
     }
 
-    private function numberToWords($number)
-    {
+    private function numberToWords($number) {
         // Remover pontos e substituir a vírgula por ponto
         $number = str_replace('.', '', $number);
         $number = str_replace(',', '.', $number);
@@ -47,21 +46,27 @@ class crudReciboController extends Controller
         // Converter para float
         $number = floatval($number);
 
-        $integerPart = floor($number);
-        $decimalPart = floor(($number - $integerPart) * 100);
-
         // Função para converter o número em extenso (exemplo simplificado)
         $formatter = new \NumberFormatter('pt_BR', \NumberFormatter::SPELLOUT);
 
+        // Obter a parte inteira e a parte decimal corretamente
+        $integerPart = floor($number);
+        $decimalPart = round(($number - $integerPart) * 100);
+
         $integerPartInWord = $formatter->format($integerPart);
         $decimalPartInWord = $formatter->format($decimalPart);
-        if($decimalPartInWord == 'zero'){
+
+        // Substituir "catorze" por "quatorze"
+        $integerPartInWord = str_replace('catorze', 'quatorze', $integerPartInWord);
+        $decimalPartInWord = str_replace('catorze', 'quatorze', $decimalPartInWord);
+
+        if ($decimalPart == 0) {
             $centavos = '';
+        } else {
+            $centavos = ' e ' . $decimalPartInWord . ' centavos';
         }
-        else{
-            $centavos = ' e '.$decimalPartInWord.' centavos';
-        }
-        return ucfirst($integerPartInWord).' reais'.$centavos;
+
+        return ucfirst($integerPartInWord) . ' reais' . $centavos;
     }
 
     public function editarRecibo(Request $request){
@@ -79,9 +84,7 @@ class crudReciboController extends Controller
         // Converter a string para float
         $valorFloat = floatval($stringComPonto);
 
-
         $numberInWords = $this->numberToWords($valor);
-
 
         try {
             $sql = DB::update('update tbrecibo set desc_recibo = ?, valor_recibo = ?, data_recibo = ?, vlr_extenso = ?  where id_recibo = ?', [

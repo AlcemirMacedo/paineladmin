@@ -1,12 +1,12 @@
 .card{
     border-radius: 10px;
-    box-shadow: 0 0 15px #acacac;
+    box-shadow: 0 0 15px #d2d2d2;
     border: none;
 }
 .card #col1{
     display: flex;
     flex-direction: column;
-    background: linear-gradient(#E36600, #ED2600 );
+    background: var(--fundo2);
     justify-content: center;
     align-items: center;
     border-radius: 10px 0 0 5px;
@@ -25,7 +25,7 @@
 .card #col1 hr{
     /* border: solid #fff 0.5px; */
     width: 100%;
-    border-color: #E36600;
+    border-color: #fff;
 }
 .card #col1 img{
     width: 60%;
@@ -54,5 +54,5 @@ form{
     margin: 0;
 }
 .row a{
-    color: #E36600;
+    color: var(--fundo2);
 }

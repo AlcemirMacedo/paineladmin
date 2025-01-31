@@ -26,10 +26,18 @@
     </script>
 @endif
 
-<div class="content col-md-12">
-
-    <a href="/cadastro" class="btn btn-success" style="margin-bottom: 10px; margin-top:20px">Cadastrar Usuário</a>
-    <table class="table table-striped table-dark col-md-12">
+<div class="content col-md-12 dash-fornecedor">
+    <h1>Usuários</h1>
+    <hr>
+    <div class="pesq-field">
+        <form action="#" class="form-inline" method="GET">
+            <a href="/cadastro" class="btn btn-success" style="margin-right: 10px">Cadastrar Usuário</a>
+            {{-- <input type="text" name="search" class="form-control col-md-4" placeholder="Pesquisar por: Nome ou CPF ou CNPJ"> --}}
+            {{-- <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Pesquisar</button> --}}
+            <span style="position: absolute; right:20px">Total de <code>{{ $contador }}</code> usuários cadastrados</span>
+        </form>
+    </div>
+    <table class="table table-striped table-dark">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -69,11 +77,7 @@
             @endforeach
 
         </tbody>
-        <tr id="footer">
-            <td colspan="5" align="right">
-                <span style="font-weight: bold; color:var(--laranja)">{{ $contador }}</span>  Registros
-            </td>
-        </tr>
+
     </table>
 </div>
 

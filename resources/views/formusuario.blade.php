@@ -3,9 +3,7 @@
 @section('links')
     <link rel="stylesheet" href="{{ asset('css/dash-frame.css') }}">
     <style>
-        body{
-            padding-top: 50px;
-        }
+        
         input{
             text-transform: none;
         }

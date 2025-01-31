@@ -6,7 +6,8 @@
 
 @section('content')
     <div class="dash-fornecedor">
-
+        <h1>Fornecedores</h1>
+        <hr>
         <div class="pesq-field">
             <form  action="/searchfornecedor" method="GET" class="form-inline">
                 {{-- @csrf --}}

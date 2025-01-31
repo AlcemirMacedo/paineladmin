@@ -12,7 +12,7 @@ class fornecedorController extends Controller
     public function viewFornecedor(){
         $sql = DB::table('tb_fornecedores')
         ->orderBy('id_fornecedores', 'desc')
-        ->paginate(10);
+        ->paginate(8);
 
         $count_fornecedor = DB::table('tb_fornecedores')->count();
         return view('fornecedor', compact('sql', 'count_fornecedor'));

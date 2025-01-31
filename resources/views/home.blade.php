@@ -7,6 +7,7 @@
 <style>
     body{
         display: flex;
+
         justify-content: center;
         align-items: flex-start;
         margin: 0;
@@ -27,7 +28,10 @@
 </style>
 
 @section('content')
-        <div class="content" style="display:flex; justify-content: center;">
+
+        <div class="content">
+            <h1 class="text-center" style="margin-top: 20px">Painel de Controle</h1>
+            <hr>
             <div class="row col-md-12" style="margin-top: 20px">
                 <div class=" col-md-4" style="margin-top: 20px;">
                     <div class="cards-home card" style="border-top:3px solid yellow ">
@@ -56,13 +60,13 @@
                         <div class="card-body">
                             <h5 class="card-title">Funcionários</h5>
                             <hr>
-                            <p class="card-text">Temos um total de <code>4</code> funcionários registrados</p>
-                            <a href="/listarfuncionarios" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
+                            <p class="card-text">Temos um total de <code>{{ $countusuario }}</code> funcionários registrados</p>
+                            <a href="/listarfuncionarios" class="btn btn-primary">Ver todos | <code class="badge badge-light"> {{ $countusuario }}</code></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4" style="margin-top: 20px">
+                {{-- <div class="col-md-4" style="margin-top: 20px">
                     <div class="cards-home card"  style="border-top:3px solid red ">
                         <div class="card-body">
                             <h5 class="card-title">RDV</h5>
@@ -71,7 +75,7 @@
                             <a href="/gridrdv" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="col-md-4" style="margin-top: 20px">
                     <div class="cards-home card"  style="border-top:3px solid green">
