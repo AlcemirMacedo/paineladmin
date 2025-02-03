@@ -42,7 +42,7 @@
                     <th scope="col">Descrição</th>
                     <th scope="col">Valor R$</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +52,6 @@
                         @php
                             $valorFormatado = number_format($item->valor_recibo, 2, ',', '.');
                         @endphp
-
                         <tr>
                             <th scope="row">{{ $item->id_recibo }}<input type="hidden" placeholder="{{ $item->id_recibo }}" name="id" value="{{ $item->id_recibo }}" readonly></th>
                             <td>{{ $item->num_recibo }}<input type="hidden" placeholder="{{ $item->num_recibo }}" value="{{ $item->num_recibo }}" name="numero" readonly></td>
@@ -62,13 +61,17 @@
                             <td>{{ $valorFormatado }}<input type="hidden" placeholder="{{ $valorFormatado }}" value="{{ $valorFormatado }}" name="valor" readonly></td>
                             <td>{{ $item->data_recibo }}<input type="hidden" placeholder="{{ $item->data_recibo }}" value="{{ $item->data_recibo }}" name="data" readonly></td>
                             <input type="hidden" placeholder="{{ $item->vlr_extenso }}" value="{{ $item->vlr_extenso }}" name="vlr_extenso">
-                            <td>
-                                <button title="Baixar" class="baixar-bot" type="submit" style="color: rgb(22, 186, 85)">
-                                    <i class="bi bi-box-arrow-down"></i>
-                                </button>|
-                                <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a> |
+                            <td class="text-center">
+                                @php
+                                    if($item->status_recibo == 1 || $item->status_recibo == NULL){
+                                        echo '<button title="Baixar" class="baixar-bot" type="submit" style="color: rgb(22, 186, 85)">
+                                            <i class="bi bi-box-arrow-down"></i>
+                                        </button>|
+                                        <a href="/formrecibo/{{ $item->id_recibo }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a> |';
+                                    }
+                                @endphp
                                 <a class="excluir-bot" title="Excluir" href="#" onclick="confirmarAcao({{ $item->id_recibo }})">
                                     <i class="bi bi-trash"></i>
                                 </a>
@@ -95,7 +98,6 @@
                 @endif
             </ul>
         @endif
-
 
     </div>
 

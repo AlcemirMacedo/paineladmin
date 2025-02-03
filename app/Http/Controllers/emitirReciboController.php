@@ -13,7 +13,6 @@ class emitirReciboController extends Controller{
         return view('emitirrecibo')->with('sql', $sql);
     }
 
-
     private function numberToWords($number) {
         // Remover pontos e substituir a vírgula por ponto
         $number = str_replace('.', '', $number);
@@ -45,8 +44,7 @@ class emitirReciboController extends Controller{
         return ucfirst($integerPartInWord) . ' reais' . $centavos;
     }
 
-
-     //Método responsável por emitir recibo avulso
+     //Método responsável por carregar a página com o formulário de recibo com número na sequência do banco de dados
      public function formReciboAvulso(){
 
         $ultRecibo = DB::select('select * from tbrecibo order by id_recibo desc limit 1');
@@ -70,6 +68,7 @@ class emitirReciboController extends Controller{
         return view('formReciboAvulso')->with('numRecibo', $numRecibo.date('/Y'));
      }
 
+     // Método que faz o registro do recibo avulso no banco de dados
      public function emitirPdfAvulso(Request $request){
         $nome = $request->input('nome');
         $descricao = $request->input('descricao');
@@ -87,10 +86,9 @@ class emitirReciboController extends Controller{
         // Converter a string para float
         $valorFloat = floatval($stringComPonto);
 
-
         $numberInWords = $this->numberToWords($valorrecibo);
 
-        DB::insert('insert into tbrecibo values (null,?,?,?,?,?,?)', [
+        DB::insert('insert into tbrecibo values (null,?,?,?,?,?,?,2)', [
             $numero,
             $cpfcnpj,
             $descricao,
@@ -99,7 +97,7 @@ class emitirReciboController extends Controller{
             $numberInWords
         ]);
 
-        
+
 
         $html = "
                 <style type='text/css'>
@@ -665,7 +663,7 @@ class emitirReciboController extends Controller{
                 $numRecibo = 2975;
             }
 
-            DB::insert('insert into tbrecibo values(null, ?,?,?,?,?,?)', [
+            DB::insert('insert into tbrecibo values(null, ?,?,?,?,?,?,1)', [
                 $numRecibo.'/'.date('Y'),
                 $cpfcnpj,
                 $descricao,

@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                {{-- <div class="col-md-4" style="margin-top: 20px">
+                <div class="col-md-4" style="margin-top: 20px">
                     <div class="cards-home card"  style="border-top:3px solid red ">
                         <div class="card-body">
                             <h5 class="card-title">RDV</h5>
@@ -75,7 +75,7 @@
                             <a href="/gridrdv" class="btn btn-primary">Ver todos | <code class="badge badge-light"> 4</code></a>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <div class="col-md-4" style="margin-top: 20px">
                     <div class="cards-home card"  style="border-top:3px solid green">

@@ -14,6 +14,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>Número</label>
+
                 <input name="numero" class="form-control" type="text" >
 
             </div>
