@@ -49,11 +49,41 @@ class rdvController extends Controller
             date('Y-m-d H:i:s'),
         ]);
 
-        $nome = $r->responsavel;
-        $via = $r->via;
-        $numero = $numRdvdb;
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$numRdvdb]);
+        $selectItens = DB::select('select * from itens_rdvs');
 
-        return view('form2', compact('nome', 'via', 'numero'));
+        return view('form2', compact('selectJoin', 'selectItens'));
     }
+
+    public function addItens(Request $request){
+        DB::insert('insert into itens_rdvs values (null, ?, ?, ?, ?, ?, ?)', [
+            $request->idrdv,
+            $request->descricao,
+            $request->valor,
+            $request->quantidade,
+            $request->total,
+            $request->obs
+        ]);
+
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=?' [$request->idrdv]);
+
+        return view('form2', compact('selectJoin', 'selectItens'));
+    }
+
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'nome' => 'required|string|max:255',
+    //         'descricao' => 'nullable|string',
+    //     ]);
+
+    //     Item::create($request->all());
+
+    //     return redirect()->route('items.create', [
+    //         'nome' => $request->nome,
+    //         'descricao' => $request->descricao
+    //     ]);
+    // }
 
 }

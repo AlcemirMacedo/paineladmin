@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="submit" class="btn btn-success">Próximo <i class="bi bi-chevron-double-right"></i></button>
         <button type="button" class="btn" onclick="window.history.back()">Voltar</button>
     </form>
 </div>
