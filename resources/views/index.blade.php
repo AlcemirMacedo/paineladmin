@@ -20,13 +20,23 @@
         <a href="/novordv" class="btn btn-success novo-rdv">Novo RDV</a>
         <table class="table table-dark">
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
+                <th scope="col">RDV nº</th>
+                <th scope="col">Responsável</th>
+                <th scope="col">Justificativa</th>
+                <th scope="col">Equipe</th>
+                <th scope="col">Via</th>
+                <th scope="col">Data da viagem</th>
+
             </tr>
             @foreach ($sql as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
+                    {{-- <td>{{ $item->id }}</td> --}}
+                    <td>{{ $item->num_rdv }}</td>
                     <td>{{ $item->nome_funcionario }}</td>
+                    <td>{{ $item->justificativa }}</td>
+                    <td>{{ $item->equipe }}</td>
+                    <td>{{ $item->via }}</td>
+                    <td>{{ $item->data_viagem }}</td>
                 </tr>
             @endforeach
         </table>

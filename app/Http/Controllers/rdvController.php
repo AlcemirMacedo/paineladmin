@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,9 +52,10 @@ class rdvController extends Controller
         ]);
 
         $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$numRdvdb]);
-        $selectItens = DB::select('select * from itens_rdvs');
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$r->idrdv]);
 
         return view('form2', compact('selectJoin', 'selectItens'));
+
     }
 
     public function addItens(Request $request){
@@ -66,24 +69,96 @@ class rdvController extends Controller
         ]);
 
         $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
-        $selectItens = DB::select('select * from itens_rdvs where rdv_id=?' [$request->idrdv]);
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
+
+        // $selectJoin = DB::select('select r.id, r.num_rdv, f.nome_funcionario, r.equipe, r.via, r.data_viagem, r.justificativa, r.created_at, ite.id, ite.rdv_id, ite.descricao, ite.valor, ite.quantidade, ite.valor_total, ite.observacao from rdvs r join itens_rdvs ite on ite.rdv_id = r.id join tb_funcionarios f on f.id_funcionario = r.id_funcionario_fk where r.num_rdv = ?',[
+        //     $request->numrdv
+        // ]);
 
         return view('form2', compact('selectJoin', 'selectItens'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'nome' => 'required|string|max:255',
-    //         'descricao' => 'nullable|string',
-    //     ]);
+    public function gerarPdf(Request $request){
 
-    //     Item::create($request->all());
+        $nomefun = $request->nome;
+        $numrdv = str_replace('/', '', $request->numrdv);
 
-    //     return redirect()->route('items.create', [
-    //         'nome' => $request->nome,
-    //         'descricao' => $request->descricao
-    //     ]);
-    // }
+        $data_iso = $request->data;
 
+        // Substitui hífens por barras
+        $data_temp = str_replace('-', '/', $data_iso);
+
+        // Reorganiza a data para o formato DD/MM/YYYY
+        $data_br = substr($data_temp, 8, 2) . '/' . substr($data_temp, 5, 2) . '/' . substr($data_temp, 0, 4);
+
+        $html = "
+            <style type='text/css'>
+                html, body {
+                    height: 297mm;
+                    width: 210mm;
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+                .main-body {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 180mm;
+                    height: 280mm;
+                    margin-left: 10mm;
+                    margin-top: 10mm;
+                }
+                .container-pdf {
+                    width: 100%;
+                    height: 120mm;
+                    background-color: #fff;
+                    border: 1px solid rgb(0, 0, 0);
+                    margin-bottom: 5mm;
+                    padding: 5mm;
+                    align-items: center;
+                    background: url('img/watermark.png');
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+                .text-head{
+                    line-height:20%;
+                    font-size:7pt;
+                    padding-left:10px;
+                }
+            </style>
+            <div class='main-body'>
+                <table>
+                    <tr>
+                        <td><img src='img/logo.png' width='100'></td>
+                        <td class='text-head'>
+                            <p>GERENCIA DE ADMINISTAÇÃO E FINANÇAS</p>
+                            <p>TECNOLOGIA DA INFORMAÇÃO</p>
+                            <p>PROVISIONAMENTO FINANCEIRO PARA VIAGENS</p>
+                        </td>
+                    </tr>
+                </table>
+                <div class='container-pdf'>
+                    $data_br
+                </div>
+            </div>
+        ";
+
+        return Pdf::loadHTML($html)->setPaper('A4', 'portrait') // Define o tamanho do papel
+                                ->set_option('isHtml5ParserEnabled', true) // Garante compatibilidade com HTML5
+                                ->set_option('isRemoteEnabled', true) // Permite imagens externas
+                                ->set_option('isPhpEnabled', false)
+                                ->download("RDV nº $numrdv $nomefun.pdf");
+
+        return redirect('/rdvlist');
+
+    }
 }

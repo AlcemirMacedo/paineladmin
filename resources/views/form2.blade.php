@@ -74,9 +74,22 @@
         </div>
 
         <button type="submit" class="btn btn-success">Adicionar <i class="bi bi-chevron-double-down"></i></i></button>
-        <button type="button" class="btn btn-warning">Finalizar</button>
+        <a href="/rdvlist" class="btn btn-danger">Sair</a>
+
     </form>
+
     <hr style="border: rgb(177, 177, 177) 1px solid">
+    <form action="gerarpdf" method="POST">
+        @csrf
+        @foreach ($selectJoin as $item)
+            <input type="hidden" name="numrdv" value="{{ @$item->num_rdv }}">
+            <input type="hidden" name="idrdv" value="{{ @$item->id }}">
+            <input type="hidden" name="nome" value="{{ @$item->nome_funcionario }}">
+            <input type="hidden" name="via" value="{{ @$item->via }}">
+            <input type="hidden" name="data" value="{{ @$item->data_viagem }}">
+        @endforeach
+        <button type="submit" class="btn btn-warning">Gerar PDF</button>
+     </form>
     <h3>Itens do RDV</h3>
     <table class="table table-dark">
         <thead>
@@ -92,7 +105,7 @@
         <tbody>
             @foreach ($selectItens as $itemrdv)
                 <tr>
-                    <td>{{ @$itemrdv->id }}</td>
+                    <td>{{ @$itemrdv->rdv_id }}</td>
                     <td>{{ @$itemrdv->descricao }}</td>
                     <td>{{ @$itemrdv->valor }}</td>
                     <td>{{ @$itemrdv->quantidade }}</td>
@@ -102,7 +115,11 @@
             @endforeach
         </tbody>
      </table>
+
+
+
 </div>
+
 
 <script>
     function formatarValor(event) {
