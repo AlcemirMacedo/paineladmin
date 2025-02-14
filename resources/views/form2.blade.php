@@ -2,6 +2,14 @@
 
 @section('links')
     <script src="https://cdn.jsdelivr.net/npm/cleave.js/dist/cleave.min.js"></script>
+    <style>
+        /* Estilizando os inputs */
+        input:focus {
+            outline: none; /* Remove a borda azul */
+            box-shadow: none; /* Remove qualquer sombra padrão */
+        }
+    </style>
+
 @endsection
 
 @section('content')
@@ -25,13 +33,13 @@
             <tbody>
                 @foreach ($selectJoin as $item)
                 <tr>
-                    <td><input type="text"  value="{{ @$item->num_rdv }} {{ old('numrdv') }}"></td>
+                    <td><input class="num-rdv" type="text" style="border: none; background:transparent; color:#ffffff;" readonly value="{{ @$item->num_rdv }} {{ old('numrdv') }}"></td>
                     <td>{{ @$item->nome_funcionario }}</td>
                     <td>{{ @$item->justificativa }}</td>
                     <td>{{ @$item->equipe }}</td>
                     <td>{{ @$item->via }}</td>
                     <td>{{ @$item->data_viagem }}</td>
-                    <td>{{ @$item->created_at }}</td>
+                    <td>{{ @$item->created_at}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -87,7 +95,20 @@
             <input type="hidden" name="nome" value="{{ @$item->nome_funcionario }}">
             <input type="hidden" name="via" value="{{ @$item->via }}">
             <input type="hidden" name="data" value="{{ @$item->data_viagem }}">
+            <input type="hidden" name="hora" value="{{ @$item->hora }}">
+            <input type="hidden" name="funcao" value="{{ @$item->funcao }}">
+            <input type="hidden" name="justificativa" value="{{ @$item->justificativa }}">
+            <input type="hidden" name="equipe" value="{{ @$item->equipe }}">
+            <input type="hidden" name="ope" value="{{ @$item->operacao }}">
+            <input type="hidden" name="created_at" value="{{ @$item->created_at }}">
         @endforeach
+
+        @foreach ($selectItens as $itemrdv)
+            <input type="hidden" name="descricao" value="{{ @$itemrdv->descricao }}">
+            <input type="hidden" name="idrdv" value="{{ @$itemrdv->rdv_id }}">
+            <input type="hidden" name="id" value="{{ @$itemrdv->id }}">
+        @endforeach
+
         <button type="submit" class="btn btn-warning">Gerar PDF</button>
      </form>
     <h3>Itens do RDV</h3>
@@ -103,15 +124,21 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $contador = 1;
+            @endphp
             @foreach ($selectItens as $itemrdv)
                 <tr>
-                    <td>{{ @$itemrdv->rdv_id }}</td>
+                    <td>{{ $contador }}</td>
                     <td>{{ @$itemrdv->descricao }}</td>
                     <td>{{ @$itemrdv->valor }}</td>
                     <td>{{ @$itemrdv->quantidade }}</td>
                     <td>{{ @$itemrdv->valor_total }}</td>
                     <td>{{ @$itemrdv->observacao}}</td>
                 </tr>
+                @php
+                    $contador++;
+                @endphp
             @endforeach
         </tbody>
      </table>

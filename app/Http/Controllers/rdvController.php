@@ -41,18 +41,21 @@ class rdvController extends Controller
             $numRdvdb = $numRdvsoma.'/'.date('Y');
         }
 
-        DB::insert("insert into rdvs values (null, ?, ?, ?, ?, ?, ?, ?, null)", [
+        DB::insert("insert into rdvs values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, null)", [
             $r->responsavel,
             $numRdvdb,
             $r->data,
+            $r->hora,
             $r->justificativa,
             $r->equipe,
+            $r->ope,
             $r->via,
             date('Y-m-d H:i:s'),
         ]);
 
         $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$numRdvdb]);
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$r->idrdv]);
+
 
         return view('form2', compact('selectJoin', 'selectItens'));
 
@@ -71,19 +74,24 @@ class rdvController extends Controller
         $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
 
-        // $selectJoin = DB::select('select r.id, r.num_rdv, f.nome_funcionario, r.equipe, r.via, r.data_viagem, r.justificativa, r.created_at, ite.id, ite.rdv_id, ite.descricao, ite.valor, ite.quantidade, ite.valor_total, ite.observacao from rdvs r join itens_rdvs ite on ite.rdv_id = r.id join tb_funcionarios f on f.id_funcionario = r.id_funcionario_fk where r.num_rdv = ?',[
-        //     $request->numrdv
-        // ]);
-
         return view('form2', compact('selectJoin', 'selectItens'));
     }
 
     public function gerarPdf(Request $request){
 
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
+
+        // dd($request);
         $nomefun = $request->nome;
         $numrdv = str_replace('/', '', $request->numrdv);
-
+        $hora = $request->hora;
+        $funcao = $request->funcao;
+        $via = $request->via;
+        $justificativa = $request->justificativa;
+        $equipe = $request->equipe;
+        $ope = $request->ope;
         $data_iso = $request->data;
+        $created_at = $request->created_at;
 
         // Substitui hífens por barras
         $data_temp = str_replace('-', '/', $data_iso);
@@ -105,6 +113,11 @@ class rdvController extends Controller
                     align-items: center;
                     text-align: center;
                     font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-size: 8pt;
+                }
+                code{
+                    color: #B22222;
+
                 }
                 .main-body {
                     display: flex;
@@ -120,9 +133,9 @@ class rdvController extends Controller
                     width: 100%;
                     height: 120mm;
                     background-color: #fff;
-                    border: 1px solid rgb(0, 0, 0);
+                    border: 1px solid rgb(82, 82, 82);
                     margin-bottom: 5mm;
-                    padding: 5mm;
+                    padding: 2mm;
                     align-items: center;
                     background: url('img/watermark.png');
                     background-position: center;
@@ -130,9 +143,13 @@ class rdvController extends Controller
                     background-repeat: no-repeat;
                 }
                 .text-head{
-                    line-height:20%;
+                    line-height:50%;
                     font-size:7pt;
                     padding-left:10px;
+                }
+                .border-td{
+                    border-right:1px solid rgb(126, 126, 126);
+                    border-bottom:1px solid rgb(126, 126, 126);
                 }
             </style>
             <div class='main-body'>
@@ -140,25 +157,70 @@ class rdvController extends Controller
                     <tr>
                         <td><img src='img/logo.png' width='100'></td>
                         <td class='text-head'>
-                            <p>GERENCIA DE ADMINISTAÇÃO E FINANÇAS</p>
+                            <p>GERENCIA DE ADMINISTRAÇÃO E FINANÇAS</p>
                             <p>TECNOLOGIA DA INFORMAÇÃO</p>
                             <p>PROVISIONAMENTO FINANCEIRO PARA VIAGENS</p>
                         </td>
                     </tr>
                 </table>
                 <div class='container-pdf'>
-                    $data_br
-                </div>
-            </div>
-        ";
+                    <table>
+                        <tr>
+                            <td>RDV nº <code>$request->numrdv</code></td>
+                        </tr>
+                        <tr>
+                            <td>Data: <code>$data_br</code> | Hora: <code>$hora</code></td>
+                        </tr>
+                        <tr>
+                            <td>Responsável: <code>$nomefun</code> | Função: <code>$funcao</code></td></tr>
+                        <tr>
+                            <td>Modalidade: <code>$via</code> | Justificativa: <code>$justificativa</code></td>
+                        </tr>
+                        <tr>
+                            <td>Equipe: <code>$equipe</code> | Operação: <code>$ope </code> | Criado em: <code>$created_at</code></td>
+                        </tr>
+                    </table>
+                    <div style='border-bottom:1px #000000 solid; width:100%; margin-top:10px; margin-bottom:10px;'></div>
+                    <table width='100%'>
+                        <thead style='background-color: #DCDCDC'>
+                            <tr>
+                                <th scope='col'>Item</th>
+                                <th scope='col'>Descrição</th>
+                                <th scope='col'>Quantidade</th>
+                                <th scope='col'>Valor R$</th>
+                                <th scope='col'>Valor Total R$</th>
+                                <th scope='col'>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                ";
+        $contador = 1;
+        foreach($selectItens as $item){
+            $html .="
+                    <tr style='border-bottom:1px solid #000000'>
+                        <td class='border-td' align='center'>$contador</td>
+                        <td class='border-td'>$item->descricao</td>
+                        <td class='border-td' align='center'>$item->quantidade</td>
+                        <td class='border-td' align='center'>$item->valor</td>
+                        <td class='border-td' align='center'>$item->valor_total</td>
+                        <td class='border-td'>$item->observacao</td>
+                    </tr>
+                ";
+                $contador++;
+        }
 
+        $html .="
+                        </tbody>
+                    </table>
+            </div>
+        </div>";
+
+        //Este Return gera o pdf
         return Pdf::loadHTML($html)->setPaper('A4', 'portrait') // Define o tamanho do papel
                                 ->set_option('isHtml5ParserEnabled', true) // Garante compatibilidade com HTML5
                                 ->set_option('isRemoteEnabled', true) // Permite imagens externas
                                 ->set_option('isPhpEnabled', false)
                                 ->download("RDV nº $numrdv $nomefun.pdf");
-
-        return redirect('/rdvlist');
 
     }
 }

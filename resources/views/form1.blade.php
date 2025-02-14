@@ -29,6 +29,10 @@
                     <input class="form-check-input" type="radio" name="via" id="inlineRadio2" value="Fluvial">
                     <label class="form-check-label" for="inlineRadio2">Fluvial</label>
                 </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="via" id="inlineRadio2" value="Fluvial/Terrestre">
+                    <label class="form-check-label" for="inlineRadio2">Terrestre/Fluvial</label>
+                </div>
             </div>
         </div>
 
@@ -37,8 +41,12 @@
                 <label>Data:</label>
                 <input class="form-control" type="date" name="data">
             </div>
+            <div style="margin-left: 10px" class="form-group">
+                <label>Hora:</label>
+                <input class="form-control" type="time" name="hora">
+            </div>
         </div>
-        <!-- Aqui estava faltando fechar as divs -->
+
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label>Justificativa</label>
@@ -49,6 +57,10 @@
             <div class="form-group col-md-12">
                 <label>Equipe</label>
                 <input name="equipe" class="form-control" type="text">
+            </div>
+            <div class="form-group col-md-12">
+                <label>Operação</label>
+                <input name="ope" class="form-control" type="text">
             </div>
         </div>
 
