@@ -81,6 +81,18 @@ class rdvController extends Controller
 
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
 
+        // Inicializar a variável de soma
+        $soma = 0;
+
+        // Iterar sobre os itens selecionados e somar os valores
+        foreach($selectItens as $ite){
+            $soma += floatval(str_replace(['.', ','], ['', '.'], $ite->valor_total));
+        }
+
+        
+        $total = number_format($soma, 2, ',', '.');
+        
+
         // dd($request);
         $nomefun = $request->nome;
         $numrdv = str_replace('/', '', $request->numrdv);
@@ -210,7 +222,11 @@ class rdvController extends Controller
         }
 
         $html .="
-                        </tbody>
+                        
+        <tr>
+            <td colspan='6' align='right' style='font-size:12pt'>Valor Total R$ <code>$total</code></td>
+        </tr>
+        </tbody>
                     </table>
             </div>
         </div>";
