@@ -12,4 +12,8 @@ Route::post('/add', [rdvController::class, 'addItens']);
 // Rota para gerar o pdf
 Route::post('gerarpdf', [rdvController::class, 'gerarPdf']);
 
+//Rotas de edições
+Route::get('/editarrdv/{value}', [rdvController::class, 'editarRdv']);
+Route::post('/salvaredicao', [rdvController::class, 'salvarEdite']);
+
 

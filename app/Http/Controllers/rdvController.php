@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class rdvController extends Controller
 {
+
+    //View RDV inicial lista todos os RDVS
     public function rdvView(){
         $sql = DB::table('rdvs')
         ->join('tb_funcionarios', 'id_funcionario', '=' ,'id_funcionario_fk')
@@ -16,6 +18,8 @@ class rdvController extends Controller
         return view('index', compact('sql'));
     }
 
+
+    //Criar novo RDV
     public function novoRdv(){
         $sql = DB::select('select * from tb_funcionarios');
         return view('form1')->with('sql', $sql);
@@ -77,6 +81,42 @@ class rdvController extends Controller
         return view('form2', compact('selectJoin', 'selectItens'));
     }
 
+    //Editar RDV
+    public function editarRdv($value){
+        $sql = DB::select('select * from tb_funcionarios');
+        $sqlRdv = DB::select('select * from rdvs join tb_funcionarios on id_funcionario = id_funcionario_fk where id = ?', [$value]);
+
+        return view('editarrdv', compact('sqlRdv', 'sql'));
+    }
+
+
+
+    public function salvarEdite(Request $request){
+        dd($request);
+        $created = date('Y-m-d H:i:s');
+        DB::update('update rdvs set id_funcionario_fk=?, num_rdv=?, data_viagem=?, hora=?, justificativa=?, equipe=?, operacao=?, via=?, created_at=?, updated_at=?  where id=?', [
+            $request->input('idfun'),
+            $request->input('numrdv'),
+            $request->input('data'),
+            $request->input('hora'),
+            $request->input('justificativa'),
+            $request->input('equipe'),
+            $request->input('ope'),
+            $request->input('via'),
+            $request->input('created_at'),
+            $created,
+            $request->input('id')
+        ]);
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
+
+        return view('form2', compact('selectJoin', 'selectItens'));
+
+    }
+
+
+
+    //Método para gerar o PDF
     public function gerarPdf(Request $request){
 
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
@@ -89,9 +129,9 @@ class rdvController extends Controller
             $soma += floatval(str_replace(['.', ','], ['', '.'], $ite->valor_total));
         }
 
-        
+
         $total = number_format($soma, 2, ',', '.');
-        
+
 
         // dd($request);
         $nomefun = $request->nome;
@@ -222,7 +262,7 @@ class rdvController extends Controller
         }
 
         $html .="
-                        
+
         <tr>
             <td colspan='6' align='right' style='font-size:12pt'>Valor Total R$ <code>$total</code></td>
         </tr>

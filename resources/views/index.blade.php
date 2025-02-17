@@ -1,7 +1,7 @@
 @extends('layouts.main_layout')
 
 @section('links')
-
+<link rel="stylesheet" href="{{ asset('css/dash-frame.css') }}">
 <style>
     .novo-rdv{
         margin: 20px 0 20px 0;
@@ -26,6 +26,7 @@
                 <th scope="col">Equipe</th>
                 <th scope="col">Via</th>
                 <th scope="col">Data da viagem</th>
+                <th scope="col">Ações</th>
 
             </tr>
             @foreach ($sql as $item)
@@ -37,6 +38,14 @@
                     <td>{{ $item->equipe }}</td>
                     <td>{{ $item->via }}</td>
                     <td>{{ $item->data_viagem }}</td>
+                    <td>
+                        <a href="/editarrdv/{{ $item->id }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a> |
+                        <a class="excluir-bot" title="Excluir" href="#" onclick="confirmarAcao({{ $item->id }})">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </table>
@@ -55,6 +64,5 @@
         </ul>
     @endif
     </div>
-
 @endsection
 

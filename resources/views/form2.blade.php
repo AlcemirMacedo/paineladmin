@@ -28,6 +28,7 @@
                     <th scope="col">via</th>
                     <th scope="col">Data da Viagem</th>
                     <th scope="col">Emissão</th>
+                    <th scope="col">Eções</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,11 @@
                     <td>{{ @$item->via }}</td>
                     <td>{{ @$item->data_viagem }}</td>
                     <td>{{ @$item->created_at}}</td>
+                    <td>
+                        <a href="/editarrdv/{{ $item->id }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
