@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\novordvRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DateTime;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class rdvController extends Controller
         return view('form1')->with('sql', $sql);
     }
 
-    public function salvarResponsavel(Request $r){
+    public function salvarResponsavel(novordvRequest $r){
+        // dd($r);
+
+        $r->validated();
 
         $ultRdv = DB::select('select num_rdv from rdvs order by id desc limit 1');
 
@@ -57,7 +61,7 @@ class rdvController extends Controller
             date('Y-m-d H:i:s'),
         ]);
 
-        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$numRdvdb]);
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where num_rdv=?', [$numRdvdb]);
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$r->idrdv]);
 
 
@@ -75,7 +79,7 @@ class rdvController extends Controller
             $request->obs
         ]);
 
-        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where num_rdv=?', [$request->numrdv]);
         $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
 
         return view('form2', compact('selectJoin', 'selectItens'));
@@ -83,19 +87,20 @@ class rdvController extends Controller
 
     //Editar RDV
     public function editarRdv($value){
-        $sql = DB::select('select * from tb_funcionarios');
+        $sqlfun = DB::select('select * from tb_funcionarios order by nome_funcionario');
         $sqlRdv = DB::select('select * from rdvs join tb_funcionarios on id_funcionario = id_funcionario_fk where id = ?', [$value]);
 
-        return view('editarrdv', compact('sqlRdv', 'sql'));
+        // dd($sqlRdv);
+        return view('editarrdv', compact('sqlRdv', 'sqlfun'));
     }
 
 
 
     public function salvarEdite(Request $request){
-        dd($request);
+        // dd($request);
         $created = date('Y-m-d H:i:s');
         DB::update('update rdvs set id_funcionario_fk=?, num_rdv=?, data_viagem=?, hora=?, justificativa=?, equipe=?, operacao=?, via=?, created_at=?, updated_at=?  where id=?', [
-            $request->input('idfun'),
+            $request->input('id_responsavel'),
             $request->input('numrdv'),
             $request->input('data'),
             $request->input('hora'),
@@ -107,13 +112,28 @@ class rdvController extends Controller
             $created,
             $request->input('id')
         ]);
-        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where id=?', [$request->numrdv]);
-        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdv]);
+
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where num_rdv=?', [$request->numrdv]);
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->id]);
 
         return view('form2', compact('selectJoin', 'selectItens'));
 
     }
 
+    //Propriedade para excluir RDV
+    public function excluirRdv($value){
+        DB::delete('delete from rdvs where id=?', [$value]);
+        return redirect('/rdvlist');
+    }
+
+    //Propriedade para excluir Item do RDV
+    public function excluirItem(Request $request){
+        DB::delete('delete from itens_rdvs where id=?', [$request->id]);
+        $selectJoin = DB::select('select * from rdvs join tb_funcionarios on id_funcionario_fk = id_funcionario where num_rdv=?', [$request->numrdv]);
+        $selectItens = DB::select('select * from itens_rdvs where rdv_id=? order by id desc', [$request->idrdvfk]);
+
+        return view('form2', compact('selectJoin', 'selectItens'));
+    }
 
 
     //Método para gerar o PDF

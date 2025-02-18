@@ -25,11 +25,15 @@
                 <th scope="col">Justificativa</th>
                 <th scope="col">Equipe</th>
                 <th scope="col">Via</th>
-                <th scope="col">Data da viagem</th>
+                <th scope="col">Data e Hora da viagem</th>
                 <th scope="col">Ações</th>
 
             </tr>
             @foreach ($sql as $item)
+            @php
+                $data = new DateTime($item->data_viagem);
+                $databr = $data->format('d/m/Y');
+            @endphp
                 <tr>
                     {{-- <td>{{ $item->id }}</td> --}}
                     <td>{{ $item->num_rdv }}</td>
@@ -37,12 +41,12 @@
                     <td>{{ $item->justificativa }}</td>
                     <td>{{ $item->equipe }}</td>
                     <td>{{ $item->via }}</td>
-                    <td>{{ $item->data_viagem }}</td>
+                    <td>{{ $databr }} às {{ $item->hora}}</td>
                     <td>
-                        <a href="/editarrdv/{{ $item->id }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                        <a href="/editarrdv/{{ $item->id }}" class="btn btn-warning text-white" style="color: rgb(22, 141, 225)" title="Editar">
                             <i class="bi bi-pencil"></i>
-                        </a> |
-                        <a class="excluir-bot" title="Excluir" href="#" onclick="confirmarAcao({{ $item->id }})">
+                        </a>
+                        <a class="btn btn-danger text-white" title="Excluir" href="/excluirrdv/{{ $item->id }}" onclick="confirmarAcao({{ $item->id }})">
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>

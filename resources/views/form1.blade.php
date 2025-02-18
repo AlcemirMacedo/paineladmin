@@ -2,6 +2,27 @@
 
 @section('content')
 
+
+
+@if ($errors -> any())
+    <script>
+        swal({
+            title:"Mensagem de erro",
+            text: "{{ implode('\n', $errors->all()) }}",
+            icon: "error"
+        })
+    </script>
+@endif
+{{-- @if ($errors -> any())
+        <script>
+            swal({
+                title: "Mensagem de erro",
+                text: "{{ implode('\n', $errors->all()) }}",
+                icon: "error"
+            })
+        </script>
+@endif --}}
+
 <div class="container">
     <h1>Selecione o funcionário</h1>
     <form action="salvarresponsavel" method="post">
@@ -10,7 +31,7 @@
             <div class="form-group col-md-4">
                 <label for="inputState">Responsável</label>
                 <select id="inputState" name="responsavel" class="form-control">
-                    <option selected>---</option>
+                    <option value="" selected>Selecione</option>
                     @foreach ($sql as $item)
                         <option  value="{{ $item->id_funcionario }}">{{ $item->nome_funcionario }}</option>
                     @endforeach
@@ -22,28 +43,29 @@
             <div class="form-group">
                 <label>Via:</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="via" id="inlineRadio1" value="Terrestre">
+                    <input class="form-check-input" type="radio" name="via" id="inlineRadio1" value="Terrestre" required>
                     <label class="form-check-label" for="inlineRadio1">Terrestre</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="via" id="inlineRadio2" value="Fluvial">
+                    <input class="form-check-input" type="radio" name="via" id="inlineRadio2" value="Fluvial" required>
                     <label class="form-check-label" for="inlineRadio2">Fluvial</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="via" id="inlineRadio2" value="Fluvial/Terrestre">
-                    <label class="form-check-label" for="inlineRadio2">Terrestre/Fluvial</label>
+                    <input class="form-check-input" type="radio" name="via" id="inlineRadio3" value="Fluvial/Terrestre" required>
+                    <label class="form-check-label" for="inlineRadio3">Terrestre/Fluvial</label>
                 </div>
             </div>
         </div>
 
+
         <div class="form-row">
             <div class="form-group">
                 <label>Data:</label>
-                <input class="form-control" type="date" name="data">
+                <input class="form-control" type="date" name="data" required>
             </div>
             <div style="margin-left: 10px" class="form-group">
                 <label>Hora:</label>
-                <input class="form-control" type="time" name="hora">
+                <input class="form-control" type="time" name="hora" required>
             </div>
         </div>
 

@@ -35,14 +35,14 @@
                 @foreach ($selectJoin as $item)
                 <tr>
                     <td><input class="num-rdv" type="text" style="border: none; background:transparent; color:#ffffff;" readonly value="{{ @$item->num_rdv }} {{ old('numrdv') }}"></td>
-                    <td>{{ @$item->nome_funcionario }}</td>
-                    <td>{{ @$item->justificativa }}</td>
-                    <td>{{ @$item->equipe }}</td>
-                    <td>{{ @$item->via }}</td>
-                    <td>{{ @$item->data_viagem }}</td>
-                    <td>{{ @$item->created_at}}</td>
+                    <td>{{ $item->nome_funcionario }}</td>
+                    <td>{{ $item->justificativa }}</td>
+                    <td>{{ $item->equipe }}</td>
+                    <td>{{ $item->via }}</td>
+                    <td>{{ $item->data_viagem }}</td>
+                    <td>{{ $item->created_at}}</td>
                     <td>
-                        <a href="/editarrdv/{{ $item->id }}" class="edit-bot" style="color: rgb(22, 141, 225)" title="Editar">
+                        <a href="/editarrdv/{{ $item->id }}" class="btn btn-warning text-white" title="Editar">
                             <i class="bi bi-pencil"></i>
                         </a>
                     </td>
@@ -87,8 +87,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success">Adicionar <i class="bi bi-chevron-double-down"></i></i></button>
-        <a href="/rdvlist" class="btn btn-danger">Sair</a>
+        <button type="submit" class="btn btn-success" title="Adicionar">Adicionar <i class="bi bi-chevron-double-down"></i></i></button>
+        <a href="/rdvlist" class="btn btn-danger" title="Sair">Sair</a>
 
     </form>
 
@@ -115,39 +115,67 @@
             <input type="hidden" name="id" value="{{ @$itemrdv->id }}">
         @endforeach
 
-        <button type="submit" class="btn btn-warning">Gerar PDF</button>
+        <button type="submit" class="btn btn-warning" title="Gerar PDF">Gerar PDF</button>
      </form>
     <h3>Itens do RDV</h3>
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Valor R$</th>
-                <th scope="col">Quantidade</th>
-                <th scope="col">Total</th>
-                <th scope="col">Observações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $contador = 1;
-            @endphp
-            @foreach ($selectItens as $itemrdv)
+    <form action="excluiritem" method="post">
+        @csrf
+        @foreach ($selectJoin as $item)
+            <input type="hidden" name="numrdv" value="{{ @$item->num_rdv }}">
+            <input type="hidden" name="idrdv" value="{{ @$item->id }}">
+            <input type="hidden" name="nome" value="{{ @$item->nome_funcionario }}">
+            <input type="hidden" name="via" value="{{ @$item->via }}">
+            <input type="hidden" name="data" value="{{ @$item->data_viagem }}">
+            <input type="hidden" name="hora" value="{{ @$item->hora }}">
+            <input type="hidden" name="funcao" value="{{ @$item->funcao }}">
+            <input type="hidden" name="justificativa" value="{{ @$item->justificativa }}">
+            <input type="hidden" name="equipe" value="{{ @$item->equipe }}">
+            <input type="hidden" name="ope" value="{{ @$item->operacao }}">
+            <input type="hidden" name="created_at" value="{{ @$item->created_at }}">
+        @endforeach
+
+        @foreach ($selectItens as $itemrdv)
+            <input type="hidden" name="descricao" value="{{ @$itemrdv->descricao }}">
+            <input type="hidden" name="idrdvfk" value="{{ @$itemrdv->rdv_id }}">
+            <input type="hidden" name="id" value="{{ @$itemrdv->id }}">
+        @endforeach
+        <table class="table table-dark">
+            <thead>
                 <tr>
-                    <td>{{ $contador }}</td>
-                    <td>{{ @$itemrdv->descricao }}</td>
-                    <td>{{ @$itemrdv->valor }}</td>
-                    <td>{{ @$itemrdv->quantidade }}</td>
-                    <td>{{ @$itemrdv->valor_total }}</td>
-                    <td>{{ @$itemrdv->observacao}}</td>
+                    <th scope="col">Item</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Valor R$</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Observações</th>
+                    <th scope="col">Ações</th>
                 </tr>
+            </thead>
+            <tbody>
                 @php
-                    $contador++;
+                    $contador = 1;
                 @endphp
-            @endforeach
-        </tbody>
-     </table>
+                @foreach ($selectItens as $itemrdv)
+                    <tr>
+                        <td>{{ $contador }}</td>
+                        <td>{{ @$itemrdv->descricao }}</td>
+                        <td>{{ @$itemrdv->valor }}</td>
+                        <td>{{ @$itemrdv->quantidade }}</td>
+                        <td>{{ @$itemrdv->valor_total }}</td>
+                        <td>{{ @$itemrdv->observacao}}</td>
+                        <td>
+                            <button title="Excluir" class="btn btn-danger" type="submit" onclick="confirmarAcao({{ $item->id }})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    @php
+                        $contador++;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+    </form>
 
 
 

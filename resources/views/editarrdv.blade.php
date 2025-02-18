@@ -2,21 +2,27 @@
 
 @section('content')
 
-@foreach ($sqlRdv as $item)
 
-@endforeach
 
 <div class="container">
+
     <h1>Selecione o funcionário</h1>
     <form action="/salvaredicao" method="post">
+        @foreach ($sqlRdv as $itemrdv)
+
+        @endforeach
+
+        @foreach ($sqlfun as $itemfun)
+
+        @endforeach
         @csrf
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputState">Responsável: {{ $item->nome_funcionario }}</label>
-                <select id="inputState" name="responsavel" class="form-control">
-                    <option selected>{{ $item->nome_funcionario }}</option>
-                        @foreach ($sql as $ite)
-                        <option  value="{{ $ite->id_funcionario }}">{{ $ite->nome_funcionario }}</option>
+                <label for="inputState"><strong>Responsável: {{ $itemrdv->nome_funcionario }}</strong></label>
+                <select id="inputState" name="id_responsavel" class="form-control">
+                    <option selected>Selecione</option>
+                        @foreach ($sqlfun as $funcionario)
+                        <option  value="{{ $funcionario->id_funcionario }}">{{ $funcionario->nome_funcionario }}</option>
                         @endforeach
                 </select>
             </div>
@@ -24,7 +30,7 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Via: {{ $item->via }}</label><br>
+                <label>Via: {{ $itemrdv->via }}</label><br>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="via" id="inlineRadio1" value="Terrestre">
                     <label class="form-check-label" for="inlineRadio1">Terrestre</label>
@@ -42,11 +48,11 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Data: {{ $item->data_viagem }}</label>
+                <label>Data da viagem: {{ $itemrdv->data_viagem }}</label>
                 <input class="form-control" type="date" name="data">
             </div>
             <div style="margin-left: 10px" class="form-group">
-                <label>Hora: {{ $item->hora }}</label>
+                <label>Hora: {{ $itemrdv->hora }}</label>
                 <input class="form-control" type="time" name="hora">
             </div>
         </div>
@@ -54,25 +60,24 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label>Justificativa</label>
-                <input name="justificativa" class="form-control" value="{{ $item->justificativa }}" type="text">
+                <input name="justificativa" class="form-control" value="{{ $itemrdv->justificativa }}" type="text">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label>Equipe</label>
-                <input name="equipe" class="form-control" value="{{ $item->equipe }}" type="text">
+                <input name="equipe" class="form-control" value="{{ $itemrdv->equipe }}" type="text">
             </div>
             <div class="form-group col-md-12">
                 <label>Operação</label>
-                <input name="ope" class="form-control" value="{{ $item->operacao }}" type="text">
+                <input name="ope" class="form-control" value="{{ $itemrdv->operacao }}" type="text">
             </div>
         </div>
 
         {{-- inputs hidden para coletar os dados --}}
-        <input type="hidden" name="id" value="{{ $item->id }}">
-        <input type="hidden" name="numrdv" value="{{ $item->num_rdv }}">
-        <input type="hidden" name="created_at" value="{{ $item->created_at }}">
-        <input type="hidden" name="idfun" value="{{ $ite->id_funcionario_fk }}">
+        <input type="hidden" name="id" value="{{ $itemrdv->id }}">
+        <input type="hidden" name="numrdv" value="{{ $itemrdv->num_rdv }}">
+        <input type="hidden" name="created_at" value="{{ $itemrdv->created_at }}">
 
         {{-- fim dos inputs hidden --}}
 

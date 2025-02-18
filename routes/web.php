@@ -16,4 +16,8 @@ Route::post('gerarpdf', [rdvController::class, 'gerarPdf']);
 Route::get('/editarrdv/{value}', [rdvController::class, 'editarRdv']);
 Route::post('/salvaredicao', [rdvController::class, 'salvarEdite']);
 
+//Rotas de exclusão
+Route::get('excluirrdv/{value}', [rdvController::class, 'excluirRdv']);
+Route::post('/excluiritem', [rdvController::class, 'excluirItem']);
+
 
