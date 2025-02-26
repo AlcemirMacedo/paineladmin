@@ -20,4 +20,8 @@ Route::post('/salvaredicao', [rdvController::class, 'salvarEdite']);
 Route::get('excluirrdv/{value}', [rdvController::class, 'excluirRdv']);
 Route::post('/excluiritem', [rdvController::class, 'excluirItem']);
 
+//Rota de teste
+Route::get('/teste', function () {
+    return 'Laravel Cloud funcionando!';
+});
 
